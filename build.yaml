@@ -21,7 +21,10 @@ include:
  - board: seeeduino_xiao_ble
    shield: CLine46_R rgbled_adapter
    snippet: studio-rpc-usb-uart
+   artifact-name: cline46_r
  - board: seeeduino_xiao_ble
    shield: CLine46_L rgbled_adapter
+   artifact-name: cline46_l
  - board: seeeduino_xiao_ble
    shield: settings_reset
+   artifact-name: reset
