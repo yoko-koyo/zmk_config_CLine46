@@ -1,0 +1,7 @@
+config ZMK_INPUT_PROCESSOR_KEY_TAPPER
+    bool "Input processor that taps behaviors based on relative movement"
+    default y
+    depends on ZMK_POINTING
+    help
+      トラックボール等の相対移動量を積算し、閾値を超えるたびに
+      移動方向に対応した behavior をタップする input processor を有効にする。

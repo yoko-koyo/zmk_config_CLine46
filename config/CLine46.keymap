@@ -14,12 +14,41 @@
 #define FUNCTION 4
 #define SCROLL 5
 #define WIRELESS 6
+#define WINDOW 7
 
 // mt (ESC/LCTRL) をモディファイア優先の判定に
 
 &mt {
     flavor = "balanced";
     quick-tap-ms = <0>;
+};
+
+/ {
+    /* トラックボールの横移動を Ctrl+←/→ (スペース切り替え) に変換する。
+       threshold を小さくすると少ない移動量で切り替わる。 */
+
+    zip_space_switch: zip_space_switch {
+        compatible = "zmk,input-processor-key-tapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_X INPUT_REL_Y>;
+        threshold = <250>;
+
+        /* codes 1つにつき「負方向」「正方向」の順。
+           X: 左スワイプ = 左のスペースへ / 右スワイプ = 右のスペースへ
+           Y: 上スワイプ = Mission Control / 下スワイプ = App Exposé */
+
+        bindings = <&kp LC(LEFT) &kp LC(RIGHT) &kp LC(UP) &kp LC(DOWN)>;
+    };
+};
+
+/* WINDOW レイヤーの間はポインタを動かさず、キータップだけを出す */
+
+&trackball_listener {
+    window {
+        layers = <WINDOW>;
+        input-processors = <&zip_space_switch>;
+    };
 };
 
 / {
@@ -181,7 +210,7 @@
         MOUSE {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB2  &mkp MB1  &mo SCROLL  &trans  &trans
+&trans  &trans  &trans  &trans  &mo WINDOW  &trans                    &trans  &mkp MB2  &mkp MB1  &mo SCROLL  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
         &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans      &trans
             >;
@@ -239,6 +268,17 @@
 &trans  &trans          &trans        &trans        &trans        &trans                               &trans          &trans  &trans  &trans  &trans  &trans
 &trans  &bt BT_CLR      &trans        &trans        &trans        &trans                               &trans          &trans  &trans  &trans  &trans  &trans
         &bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans    &bootloader  &studio_unlock                  &trans  &trans
+            >;
+        };
+
+        //7 スペース切り替え用（トラックボール横移動 = Ctrl+←/→）
+
+        WINDOW {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                  &trans  &trans
             >;
         };
     };

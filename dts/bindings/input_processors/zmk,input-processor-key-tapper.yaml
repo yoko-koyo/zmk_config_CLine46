@@ -1,0 +1,43 @@
+# CLine46: 相対移動をキータップに変換する input processor
+
+description: |
+  相対入力(トラックボール等)の移動量をコードごとに積算し、threshold を
+  超えるたびに移動方向に対応する behavior をタップする。
+
+  bindings は codes 1つにつき2つ必要で、順に「負方向」「正方向」に対応する。
+  例: codes = <INPUT_REL_X>; bindings = <&kp LC(LEFT) &kp LC(RIGHT)>;
+
+compatible: "zmk,input-processor-key-tapper"
+
+include: ip_zero_param.yaml
+
+properties:
+  type:
+    type: int
+    required: true
+    description: 対象のイベントタイプ (例 INPUT_EV_REL)
+
+  codes:
+    type: array
+    required: true
+    description: 対象のイベントコード (例 INPUT_REL_X)
+
+  threshold:
+    type: int
+    default: 250
+    description: 1タップを発生させるのに必要な累積移動量
+
+  tap-ms:
+    type: int
+    default: 10
+    description: タップの押下時間(ms)
+
+  wait-ms:
+    type: int
+    default: 10
+    description: 次のタップまでの待ち時間(ms)
+
+  bindings:
+    type: phandle-array
+    required: true
+    description: codes 1つにつき「負方向」「正方向」の2つ

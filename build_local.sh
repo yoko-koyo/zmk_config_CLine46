@@ -207,6 +207,10 @@ build_target() {
       local cmake_args_array=()
       cmake_args_array+=("-DZMK_CONFIG=/zmk/config")
       cmake_args_array+=("-DBOARD_ROOT=/zmk")
+      # このリポジトリ自身を Zephyr モジュールとして登録する。
+      # CI では config/ に配置されて自動でモジュールになるが、
+      # ローカルはリポジトリ直下が west の topdir なので明示が必要。
+      cmake_args_array+=("-DZMK_EXTRA_MODULES=/zmk")
       if [ -n "$shield" ]; then
         cmake_args_array+=("-DSHIELD=$shield")
       fi
