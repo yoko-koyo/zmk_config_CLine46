@@ -364,10 +364,10 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1     &kp N2    &kp N3    &kp N4    &kp N5                           &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp SLASH  &kp BSLH  &kp LBKT  &kp RBKT  &macro_braces                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &kp QMARK  &kp PIPE  &kp LPAR  &kp RPAR  &macro_parens                    &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
-        &trans     &trans    &trans    &trans    &trans         &trans    &trans  &trans                      &trans     &trans
+&trans  &kp N1     &kp N2    &kp N3    &kp N4    &kp N5                      &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp SLASH  &kp BSLH  &kp LBKT  &kp RBKT  &kp LPAR                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &kp QMARK  &kp PIPE  &kp LBRC  &kp RBRC  &kp RPAR                    &kp SEMI  &kp SQT   &trans  &trans     &trans  &trans
+        &trans     &trans    &trans    &trans    &trans    &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
