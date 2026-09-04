@@ -6,43 +6,334 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-&mt {
-    flavor = "balanced";
-    quick-tap-ms = <0>;
-};
+// レイヤー定義
+
+#define MOUSE 1
+#define NUMBER 2
+#define SYMBOL 3
+#define FUNCTION 4
+#define SCROLL 5
+#define WIRELESS 6
 
 / {
-    combos {
-        compatible = "zmk,combos";
-
-        tab {
-            bindings = <&kp TAB>;
-            key-positions = <11 12>;
+    macros {
+        macro_ctrl_space: macro_ctrl_space {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp SPACE>,
+                <&macro_release>,
+                <&kp LCTRL>;
         };
 
-        shift_tab {
-            bindings = <&kp LS(TAB)>;
-            key-positions = <12 13>;
+        /* ()を入力してカーソルを中に戻す */
+
+        macro_parens: macro_parens {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LPAR &kp RPAR &kp LEFT>;
+        };
+
+        /* []を入力してカーソルを中に戻す */
+
+        macro_brackets: macro_brackets {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LBKT &kp RBKT &kp LEFT>;
+        };
+
+        /* {}を入力してカーソルを中に戻す */
+
+        macro_braces: macro_braces {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LBRC &kp RBRC &kp LEFT>;
+        };
+
+        /* <>を入力してカーソルを中に戻す */
+
+        macro_angles: macro_angles {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LT &kp GT &kp LEFT>;
+        };
+
+        /* ''を入力してカーソルを中に戻す */
+
+        macro_squotes: macro_squotes {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp SQT &kp SQT &kp LEFT>;
+        };
+
+        /* ""を入力してカーソルを中に戻す */
+
+        macro_dquotes: macro_dquotes {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DQT &kp DQT &kp LEFT>;
+        };
+
+        macro_if: if {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp RPAR &kp SPACE &kp LBRC &kp RBRC>;
+            label = "IF";
         };
     };
 
-    macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
+    combos {
+        compatible = "zmk,combos";
+
+        // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
+
+        BluetoothLayer {
+            bindings = <&mo WIRELESS>;
+            key-positions = <43 44 45>;
+        };
+
+        // ' : 右手ホーム段 [K] + [L]
+
+        combo_sqt {
+            bindings = <&kp SQT>;
+            key-positions = <21 20>;
+        };
+
+        // ; : 右手ホーム段 [J] + [K]
+
+        combo_semi {
+            bindings = <&kp SEMI>;
+            key-positions = <20 19>;
+        };
+
+        // / : 右手下段 [,] + [.]
+
+        combo_slash {
+            bindings = <&kp SLASH>;
+            key-positions = <32 33>;
+        };
+
+        // ` : 右手上段 [I] + [O]
+
+        combo_grave {
+            bindings = <&kp GRAVE>;
+            key-positions = <8 9>;
+        };
+
+        // (){} : [D] + [F] + [J] + [K]
+
+        combo_m_if {
+            bindings = <&macro_if>;
+            key-positions = <19 20 16 15>;
+        };
+
+        // ESC : 右手ホーム段 [J] + [L]
+
+        combo_esc {
+            bindings = <&kp ESC>;
+            key-positions = <19 21>;
+            timeout-ms = <60>;
+        };
+
+        // \ : 右手ホーム段 [H] + [J]
+
+        combo_back_slash {
+            bindings = <&kp BSLH>;
+            key-positions = <18 19>;
+        };
+
+        // かな : [A] + [-]
+
+        bs {
+            bindings = <&kp LANG1>;
+            key-positions = <13 22>;
+        };
+
+        // 英数 : [S] + [L]
+
+        l2 {
+            bindings = <&kp LANG2>;
+            key-positions = <14 21>;
         };
     };
 
     behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
+        // 長押しでLGUI (Cmd)、単押しでCtrl+Spaceマクロ
 
+        gui_ctrl_space: gui_ctrl_space {
+            compatible = "zmk,behavior-hold-tap";
+            label = "GUI_CTRL_SPACE";
             #binding-cells = <2>;
+            tapping-term-ms = <200>;    // 長押しと判定されるまでの時間
+            quick-tap-ms = <150>;       // 素早く2回叩いた時の挙動調整
+            flavor = "hold-preferred";   // 単押し（マクロ）を優先する設定
+            bindings = <&kp>, <&macro_ctrl_space>;
+        };
+
+        // Caps Lockをダブルタップで発動させる設定
+
+        td_caps: td_caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_CAPS";
+            #binding-cells = <0>;
             tapping-term-ms = <200>;
+            bindings = <&none>, <&kp CAPS>;
+
+            // 1タップ目は何もしない（あるいは別のキー）、2タップでCaps
+        };
+
+        // カスタムHold-Tap: ホールドでLCMD、タップでLANG2、ダブルタップでCaps
+
+        hm_caps: hm_caps {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM_CAPS";
+            #binding-cells = <2>;
+
+            // ホールド判定を少し短めにして、Commandとしての反応を速くする
+
+            tapping-term-ms = <200>;
+
+            // 連続入力時の判定を安定させる
+
+            quick-tap-ms = <175>;
+
+            // タップ判定よりもホールド（Command）を優先
+
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&td_caps_lang>;
+        };
+
+        // LANG2とCAPSのタップダンス
+
+        td_caps_lang: td_caps_lang {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_CAPS_LANG";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp LANG2>, <&kp CAPS>;
+
+            // 1タップで英数、2タップでCaps
+        };
+
+        // タップで英数、ダブルタップでかな
+
+        td_enjp: td_enjp {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_ENJP";
+            #binding-cells = <0>;
+            tapping-term-ms = <270>;
+            bindings = <&kp LANG2>, <&kp LANG1>;
+        };
+
+        // 長押しGUI、タップで英数かな切り替え
+
+        gui_en: gui_en {
+            compatible = "zmk,behavior-hold-tap";
+            label = "GUI_EN";
+            #binding-cells = <2>;
+            tapping-term-ms = <129>;
+            flavor = "balanced";
+            hold-trigger-on-release;
+            bindings = <&kp>, <&td_enjp>;
+        };
+
+        // 一般的なHold-Tap (Hold: Modifier, Tap: Key)
+
+        hm: hm {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM";
+            #binding-cells = <2>;
+            tapping-term-ms = <160>;
+            quick-tap-ms = <190>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+        // 一般的なLayer-Tap (Hold: Layer, Tap: Key)
+
+        lt_k: lt_k {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_K";
+            #binding-cells = <2>;
+            tapping-term-ms = <160>;
+            flavor = "hold-preferred";
+            quick-tap-ms = <150>;
+            bindings = <&mo>, <&kp>;
+        };
+
+        // スペース用Hold-Tap
+
+        st: st {
+            compatible = "zmk,behavior-hold-tap";
+            label = "ST";
+            #binding-cells = <2>;
+            tapping-term-ms = <195>;
+            quick-tap-ms = <195>;
+            require-prior-idle-ms = <100>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Ctrl併用時に単語削除(Alt+BS)化
+
+        bs_m: bs_m {
+            compatible = "zmk,behavior-mod-morph";
+            label = "BS_M";
+            #binding-cells = <0>;
+            bindings = <&kp BSPC>, <&kp LA(BSPC)>;
+
+            mods = <(MOD_LCTL)>;
+        };
+
+        // 右親指用：長押しLayer、タップBSPC（Ctrl時は単語削除）、連打長押しでLayer優先
+
+        l1_bs: l1_bs {
+            compatible = "zmk,behavior-hold-tap";
+            label = "L1_BS";
+            #binding-cells = <2>;
+            tapping-term-ms = <160>;
+            flavor = "hold-preferred";
+            quick-tap-ms = <0>; // 連打時のBS長押しを禁止
+            bindings = <&mo>, <&bs_m>;
+        };
+
+        stl: stl {
+            compatible = "zmk,behavior-hold-tap";
+            label = "STL";
+            #binding-cells = <2>;
+            tapping-term-ms = <195>;
+            quick-tap-ms = <180>;
+            require-prior-idle-ms = <100>;
+            flavor = "tap-preferred";
+            bindings = <&mo>, <&kp>;
+        };
+
+        stmo: stmo {
+            compatible = "zmk,behavior-hold-tap";
+            label = "STMO";
+            #binding-cells = <2>;
+            tapping-term-ms = <196>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <90>;
+            flavor = "tap-preferred";
+            bindings = <&mt>, <&kp>;
         };
     };
 
@@ -51,64 +342,76 @@
 
         default_layer {
             bindings = <
-&kp TAB     &kp Q    &kp W     &kp E     &kp R       &kp T                                 &kp Y        &kp U  &kp I      &kp O         &kp P      &kp LEFT_BRACKET
-&kp LCTRL   &kp A    &kp S     &kp D     &kp F       &kp G                                 &kp H        &kp J  &kp K      &kp L         &kp MINUS  &kp RIGHT_BRACKET
-&kp LSHIFT  &kp Z    &kp X     &kp C     &kp V       &kp B                                 &kp N        &kp M  &kp COMMA  &kp DOT       &mo 3      &kp RSHIFT
-            &kp ESC  &kp LGUI  &kp LALT  &lt 2 LALT  &mt LGUI LANG2  &kp SPACE    &kp RET  &lt 1 LANG1                    &kp NUMBER_9  &kp DEL
+&kp TAB     &kp Q     &kp W     &kp E     &kp R               &kp T                                        &kp Y              &kp U  &kp I             &kp O              &kp P             &kp LEFT_BRACKET
+&kp LCTRL   &kp A     &kp S     &kp D     &kp F               &kp G                                        &kp H              &kp J  &kp K             &kp L              &kp MINUS         &kp RIGHT_BRACKET
+&kp LSHIFT  &kp Z     &kp X     &kp C     &kp V               &kp B                                        &kp N              &kp M  &kp COMMA         &kp DOT            &st RSHIFT EQUAL  &kp RSHIFT
+            &kp LSHIFT  &kp LALT  &kp LCTRL  &lt_k SYMBOL LANG1  &hm LGUI LANG2  &kp SPACE    &lt FUNCTION RET  &lt_k NUMBER BSPC         &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
             >;
         };
 
-        layer_1 {
-            bindings = <
-&kp CARET  &kp EQUAL     &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp AT_SIGN                        &kp LEFT_PARENTHESIS  &kp DOUBLE_QUOTES  &kp RIGHT_PARENTHESIS  &kp SEMI   &kp EXCLAMATION  &kp QMARK
-&kp MINUS  &kp PLUS      &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp HASH                           &kp LEFT_BRACKET      &kp SINGLE_QUOTE   &kp RIGHT_BRACKET      &kp COLON  &kp AMPERSAND    &kp PIPE
-&kp SLASH  &kp ASTERISK  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp UNDERSCORE                     &kp SLASH             &kp BACKSLASH      &kp COMMA              &kp DOT    &kp DOLLAR       &kp PERCENT
-           &kp ESC       &kp NUMBER_0  &kp DOT       &trans        &trans          &trans    &kp RET  &kp BSPC                                                        &kp DEL    &trans
-            >;
-        };
+        //1 マウス操作用
 
         MOUSE {
             bindings = <
-&trans  &trans  &kp F7  &kp F8  &kp F9  &kp F10                     &kp LC(Y)  &kp LC(C)       &kp LC(V)       &kp LC(X)        &kp LC(P)  &trans
-&trans  &trans  &kp F4  &kp F5  &kp F6  &kp F11                     &kp LC(Z)  &mkp MB1        &kp UP_ARROW    &mkp MB2         &kp LC(F)  &trans
-&trans  &trans  &kp F1  &kp F2  &kp F3  &kp F12                     &kp LC(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans     &trans
-        &trans  &trans  &trans  &trans  &trans   &trans    &kp RET  &kp BSPC                                   &kp HOME         &kp END
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB2  &mkp MB1  &mo SCROLL  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans      &trans
             >;
         };
+
+        //2 数字・基本記号・矢印キー
+
+        NUMBER {
+            bindings = <
+&trans  &kp N1     &kp N2    &kp N3    &kp N4    &kp N5                            &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp SLASH  &kp BSLH  &kp LBKT  &kp RBKT  &macro_braces                     &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &kp QMARK  &kp PIPE  &kp LPAR  &kp RPAR  &macro_parens                     &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
+        &trans     &trans    &trans    &trans    &trans         &trans    &trans   &trans              &trans  &trans
+            >;
+        };
+
+        //3 記号・Ctrl付き矢印
+
+        SYMBOL {
+            bindings = <
+&trans  &kp EXCL      &kp AT         &kp HASH       &kp DLLR       &kp PRCNT                          &kp CARET     &kp AMPS      &kp ASTRK   &kp LPAR       &kp RPAR  &trans
+&trans  &kp C_BRI_DN  &kp C_BRI_INC  &macro_parens  &macro_braces  &macro_brackets                    &kp LC(LEFT)  &kp LC(DOWN)  &kp LC(UP)  &kp LC(RIGHT)  &trans    &trans
+&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans         &trans         &trans                             &trans        &trans        &trans      &trans         &trans    &trans
+        &trans        &trans         &trans         &trans         &trans           &trans    &trans  &trans                      &trans      &trans
+            >;
+        };
+
+        //4 F1〜F12・テンキー
+
+        FUNCTION {
+            bindings = <
+&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
+&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
+&trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
+        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans             &trans  &trans
+            >;
+        };
+
+        //5 スクロール操作用
 
         SCROLL {
             bindings = <
-&bt BT_CLR      &trans  &trans        &trans        &trans        &trans                            &trans  &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR_ALL  &trans  &bt BT_SEL 4  &trans        &trans        &trans                            &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &trans                            &trans  &trans  &trans  &trans  &trans  &trans
-                &trans  &bt BT_SEL 0  &trans        &trans        &trans  &trans    &studio_unlock  &trans                  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                          &trans        &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                          &trans        &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                          &trans        &trans  &trans  &trans  &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &kp LG(W)     &kp LG(LEFT)          &trans  &trans
             >;
         };
 
-        layer_4 {
-            bindings = <
-&trans  &trans  &trans        &trans        &trans        &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &bt BT_SEL 4  &trans        &trans        &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-        &trans  &bt BT_SEL 0  &trans        &trans        &trans  &trans    &trans  &trans                  &trans  &trans
-            >;
-        };
+        //6 通信・システム設定
 
-        layer_5 {
+        WIRELESS {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                  &trans  &trans
-            >;
-        };
-
-        layer_6 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                  &trans  &trans
+&trans  &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                         &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans          &trans        &trans        &trans        &trans                               &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &bt BT_CLR      &trans        &trans        &trans        &trans                               &trans          &trans  &trans  &trans  &trans  &trans
+        &bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans    &bootloader  &studio_unlock          &trans  &trans
             >;
         };
     };
