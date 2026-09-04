@@ -15,22 +15,15 @@
 #define SCROLL 5
 #define WIRELESS 6
 
+// mt (ESC/LCTRL) をモディファイア優先の判定に
+
+&mt {
+    flavor = "balanced";
+    quick-tap-ms = <0>;
+};
+
 / {
     macros {
-        macro_ctrl_space: macro_ctrl_space {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL>,
-                <&macro_tap>,
-                <&kp SPACE>,
-                <&macro_release>,
-                <&kp LCTRL>;
-        };
-
         /* ()を入力してカーソルを中に戻す */
 
         macro_parens: macro_parens {
@@ -59,36 +52,6 @@
             wait-ms = <10>;
             tap-ms = <10>;
             bindings = <&kp LBRC &kp RBRC &kp LEFT>;
-        };
-
-        /* <>を入力してカーソルを中に戻す */
-
-        macro_angles: macro_angles {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp LT &kp GT &kp LEFT>;
-        };
-
-        /* ''を入力してカーソルを中に戻す */
-
-        macro_squotes: macro_squotes {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp SQT &kp SQT &kp LEFT>;
-        };
-
-        /* ""を入力してカーソルを中に戻す */
-
-        macro_dquotes: macro_dquotes {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp DQT &kp DQT &kp LEFT>;
         };
 
         macro_if: if {
@@ -175,85 +138,6 @@
     };
 
     behaviors {
-        // 長押しでLGUI (Cmd)、単押しでCtrl+Spaceマクロ
-
-        gui_ctrl_space: gui_ctrl_space {
-            compatible = "zmk,behavior-hold-tap";
-            label = "GUI_CTRL_SPACE";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;    // 長押しと判定されるまでの時間
-            quick-tap-ms = <150>;       // 素早く2回叩いた時の挙動調整
-            flavor = "hold-preferred";   // 単押し（マクロ）を優先する設定
-            bindings = <&kp>, <&macro_ctrl_space>;
-        };
-
-        // Caps Lockをダブルタップで発動させる設定
-
-        td_caps: td_caps {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_CAPS";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&none>, <&kp CAPS>;
-
-            // 1タップ目は何もしない（あるいは別のキー）、2タップでCaps
-        };
-
-        // カスタムHold-Tap: ホールドでLCMD、タップでLANG2、ダブルタップでCaps
-
-        hm_caps: hm_caps {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HM_CAPS";
-            #binding-cells = <2>;
-
-            // ホールド判定を少し短めにして、Commandとしての反応を速くする
-
-            tapping-term-ms = <200>;
-
-            // 連続入力時の判定を安定させる
-
-            quick-tap-ms = <175>;
-
-            // タップ判定よりもホールド（Command）を優先
-
-            flavor = "hold-preferred";
-            bindings = <&kp>, <&td_caps_lang>;
-        };
-
-        // LANG2とCAPSのタップダンス
-
-        td_caps_lang: td_caps_lang {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_CAPS_LANG";
-            #binding-cells = <0>;
-            tapping-term-ms = <250>;
-            bindings = <&kp LANG2>, <&kp CAPS>;
-
-            // 1タップで英数、2タップでCaps
-        };
-
-        // タップで英数、ダブルタップでかな
-
-        td_enjp: td_enjp {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_ENJP";
-            #binding-cells = <0>;
-            tapping-term-ms = <270>;
-            bindings = <&kp LANG2>, <&kp LANG1>;
-        };
-
-        // 長押しGUI、タップで英数かな切り替え
-
-        gui_en: gui_en {
-            compatible = "zmk,behavior-hold-tap";
-            label = "GUI_EN";
-            #binding-cells = <2>;
-            tapping-term-ms = <129>;
-            flavor = "balanced";
-            hold-trigger-on-release;
-            bindings = <&kp>, <&td_enjp>;
-        };
-
         // 一般的なHold-Tap (Hold: Modifier, Tap: Key)
 
         hm: hm {
@@ -278,63 +162,6 @@
             bindings = <&mo>, <&kp>;
         };
 
-        // スペース用Hold-Tap
-
-        st: st {
-            compatible = "zmk,behavior-hold-tap";
-            label = "ST";
-            #binding-cells = <2>;
-            tapping-term-ms = <195>;
-            quick-tap-ms = <195>;
-            require-prior-idle-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
-        // Ctrl併用時に単語削除(Alt+BS)化
-
-        bs_m: bs_m {
-            compatible = "zmk,behavior-mod-morph";
-            label = "BS_M";
-            #binding-cells = <0>;
-            bindings = <&kp BSPC>, <&kp LA(BSPC)>;
-
-            mods = <(MOD_LCTL)>;
-        };
-
-        // 右親指用：長押しLayer、タップBSPC（Ctrl時は単語削除）、連打長押しでLayer優先
-
-        l1_bs: l1_bs {
-            compatible = "zmk,behavior-hold-tap";
-            label = "L1_BS";
-            #binding-cells = <2>;
-            tapping-term-ms = <160>;
-            flavor = "hold-preferred";
-            quick-tap-ms = <0>; // 連打時のBS長押しを禁止
-            bindings = <&mo>, <&bs_m>;
-        };
-
-        stl: stl {
-            compatible = "zmk,behavior-hold-tap";
-            label = "STL";
-            #binding-cells = <2>;
-            tapping-term-ms = <195>;
-            quick-tap-ms = <180>;
-            require-prior-idle-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&mo>, <&kp>;
-        };
-
-        stmo: stmo {
-            compatible = "zmk,behavior-hold-tap";
-            label = "STMO";
-            #binding-cells = <2>;
-            tapping-term-ms = <196>;
-            quick-tap-ms = <175>;
-            require-prior-idle-ms = <90>;
-            flavor = "tap-preferred";
-            bindings = <&mt>, <&kp>;
-        };
     };
 
     keymap {
@@ -345,7 +172,7 @@
 &kp TAB        &kp Q  &kp W  &kp E  &kp R     &kp T                                          &kp Y               &kp U  &kp I      &kp O             &kp P              &kp DEL
 &mt ESC LCTRL  &kp A  &kp S  &kp D  &kp F     &kp G                                          &kp H               &kp J  &kp K      &kp L             &kp MINUS          &kp BACKSPACE
 &kp LSHIFT     &kp Z  &kp X  &kp C  &kp V     &kp B                                          &kp N               &kp M  &kp COMMA  &kp DOT           &kp EQUAL          &kp RSHIFT
-               &mo 6  &mo 5  &mo 4  &kp LALT  &hm LGUI LANG2  &kp SPACE    &lt FUNCTION RET  &lt_k NUMBER LANG1                    &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
+               &mo WIRELESS  &mo SCROLL  &mo FUNCTION  &kp LALT  &hm LGUI LANG2  &kp SPACE    &lt FUNCTION RET  &lt_k NUMBER LANG1                    &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
             >;
         };
 
