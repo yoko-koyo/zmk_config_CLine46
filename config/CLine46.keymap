@@ -231,7 +231,7 @@
 &kp ESC       &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I      &kp O    &kp P      &kp DEL
 &mt LALT TAB  &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K      &kp L    &kp MINUS  &kp BSPC
 &kp LSHIFT    &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &kp COMMA  &kp DOT  &kp EQUAL  &kp RSHIFT
-              &mo WIRELESS  &mo SCROLL  &mo FUNCTION  &ctrl_window  &hm LGUI LANG2  &stl FUNCTION SPACE      &kp RET  &lt_k NUMBER LANG1  &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
+              &mo WIRELESS  &mo SCROLL  &mo SYMBOL  &ctrl_window  &hm LGUI LANG2  &stl FUNCTION SPACE      &kp RET  &lt_k NUMBER LANG1  &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
             >;
         };
 
