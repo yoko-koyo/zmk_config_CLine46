@@ -81,7 +81,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        cpi = <400>;   // カーソル速度。下げるほど遅くなる (200刻み)
+        cpi = <450>;   // カーソル速度。下げるほど遅くなる (200刻み)
         //swap-xy;
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
