@@ -259,8 +259,8 @@
             bindings = <
 &kp TAB       &kp Q         &kp W       &kp E       &kp R                 &kp T                                           &kp Y               &kp U  &kp I      &kp O             &kp P              &kp EQUAL
 &mt LALT ESC  &kp A         &kp S       &kp D       &kp F                 &kp G                                           &kp H               &kp J  &kp K      &kp L             &kp SEMI           &kp MINUS
-&kp LSHIFT    &kp Z         &kp X       &kp C       &kp V                 &kp B                                           &kp N               &kp M  &kp COMMA  &kp DOT           &kp SLASH          &hm RSHIFT BSLH
-              &mo WIRELESS  &mo SCROLL  &mo SYMBOL  &ctrl_win WINDOW LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET                 &mkp MB1  &lt_mkp SCROLL MB2
+&kp LSHIFT    &kp Z         &kp X       &kp C       &kp V                 &kp B                                           &kp N               &kp M  &kp COMMA  &kp DOT           &kp SLASH          &hm RSHIFT RET
+              &mo WIRELESS  &mo SCROLL  &mo SYMBOL  &ctrl_win WINDOW LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                 &mkp MB1  &lt_mkp SCROLL MB2
             >;
         };
 
