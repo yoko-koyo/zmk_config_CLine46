@@ -10,6 +10,23 @@
 
 
 / {
+    /* オートマウスレイヤー。タイムアウトは使わず(第2引数 0)、
+       excluded-positions 以外のキーを押した時点で解除する。
+       ZMK 標準の zip_temp_layer は excluded-positions が空だと
+       キー押下による解除が一切働かないため、必ず指定すること
+       (zmk/app/src/pointing/input_processor_temp_layer.c の
+        handle_position_state_changed)。 */
+
+    auto_mouse: auto_mouse {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+
+        //  19 20 21       : 右クリック / 左クリック / スクロール
+        //  12 24 35 39 40 : モディファイア (Shift+クリック等のため維持)
+
+        excluded-positions = <19 20 21 12 24 35 39 40>;
+    };
+
     trackball_listener {
         status = "okay";
         compatible = "zmk,input-listener";
@@ -68,7 +85,7 @@
         //<&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;         //Y軸反転
         //<&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
         <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-        <&zip_temp_layer 1 1000>;                           //トラックボール操作で MOUSE レイヤー(1)を1秒間有効化
+        <&auto_mouse 1 0>;                                  //トラックボール操作で MOUSE レイヤー(1)を有効化。0 = 自動解除なし
 
 
     scroller {
