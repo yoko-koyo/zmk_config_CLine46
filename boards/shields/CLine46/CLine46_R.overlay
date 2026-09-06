@@ -21,10 +21,12 @@
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
 
-        //  19 20 21          : 右クリック / 左クリック / スクロール
-        //  12 24 35 39 40 44 45 : モディファイア (Shift+クリック等のため維持)
+        //  21 44 45       : スクロール保持とデフォルトレイヤーのクリック
+        //  12 24 35 39 40 : モディファイア (Shift+クリック等のため維持)
+        //  19 20 は意図的に除外しない。MOUSE レイヤーのクリックを一度叩いたら
+        //  レイヤーを抜けるようにするため。
 
-        excluded-positions = <19 20 21 12 24 35 39 40 44 45>;
+        excluded-positions = <21 12 24 35 39 40 44 45>;
     };
 
     trackball_listener {
