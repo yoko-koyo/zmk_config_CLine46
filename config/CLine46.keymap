@@ -201,7 +201,7 @@
             label = "HM";
             #binding-cells = <2>;
             tapping-term-ms = <130>;   // タップの反応を早くするため 160 から短縮
-            quick-tap-ms = <190>;
+            quick-tap-ms = <0>;        // 連打からの長押しでタップ側(RET)がリピートするのを禁止
             flavor = "hold-preferred";
             bindings = <&kp>, <&kp>;
         };
@@ -228,9 +228,13 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LT_K";
             #binding-cells = <2>;
-            tapping-term-ms = <130>;   // タップの反応を早くするため 160 から短縮
-            flavor = "hold-preferred";
-            quick-tap-ms = <150>;
+            // tap-preferred: 他キーを押してもホールドに確定しない。
+            //   速くタップしたときに NUMBER レイヤーへ化けるのを防ぐ。
+            //   この flavor では tapping-term だけがホールドの条件になるため、
+            //   短いほうがレイヤーに早く入り、意図しない RET が出る余地も小さい。
+            tapping-term-ms = <130>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <0>;        // 連打からの長押しでタップ側(RET)がリピートするのを禁止
             bindings = <&mo>, <&kp>;
         };
     };
@@ -242,8 +246,8 @@
             bindings = <
 &kp TAB       &kp Q         &kp W       &kp E       &kp R                 &kp T                                           &kp Y               &kp U  &kp I      &kp O             &kp P              &kp EQUAL
 &mt LALT ESC  &kp A         &kp S       &kp D       &kp F                 &kp G                                           &kp H               &kp J  &kp K      &kp L             &kp SEMI           &kp MINUS
-&kp LSHIFT    &kp Z         &kp X       &kp C       &kp V                 &kp B                                           &kp N               &kp M  &kp COMMA  &kp DOT           &kp SLASH          &kp BSPC
-              &mo WIRELESS  &mo SCROLL  &mo SYMBOL  &ctrl_win WINDOW ESC  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp RET  &lt_k NUMBER LANG1                    &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
+&kp LSHIFT    &kp Z         &kp X       &kp C       &kp V                 &kp B                                           &kp N               &kp M  &kp COMMA  &kp DOT           &kp SLASH          &hm RSHIFT RET
+              &mo WIRELESS  &mo SCROLL  &mo SYMBOL  &ctrl_win WINDOW LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET                    &kp LA(LS(LEFT))  &kp LA(LS(RIGHT))
             >;
         };
 
