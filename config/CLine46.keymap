@@ -270,10 +270,10 @@
 
         default_layer {
             bindings = <
-&kp ESC        &kp Q   &kp W         &kp E       &kp R     &kp T                                            &kp Y               &kp U  &kp I      &kp O     &kp P               &kp MINUS
-&hm LCTRL TAB  &kp A   &kp S         &kp D       &kp F     &kp G                                            &kp H               &kp J  &kp K      &kp L     &kp SEMI            &kp EQUAL
-&kp LSHIFT     &kp Z   &kp X         &kp C       &kp V     &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT   &kp SLASH           &hm RSHIFT RET
-               &trans  &mo WIRELESS  &mo SCROLL  &kp LALT  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mkp MB1  &lt_mkp SCROLL MB2
+&kp ESC        &kp Q   &kp W         &kp E       &kp R           &kp T                                            &kp Y             &kp U  &kp I      &kp O     &kp P               &kp MINUS
+&hm LCTRL TAB  &kp A   &kp S         &kp D       &kp F           &kp G                                            &kp H             &kp J  &kp K      &kp L     &kp SEMI            &kp EQUAL
+&kp LSHIFT     &kp Z   &kp X         &kp C       &kp V           &kp B                                            &kp N             &kp M  &kp COMMA  &kp DOT   &kp SLASH           &hm RSHIFT BSLH
+               &trans  &mo WIRELESS  &mo SCROLL  &hm LALT LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET                    &mkp MB1  &lt_mkp SCROLL MB2
             >;
         };
 
@@ -292,10 +292,10 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1     &kp N2    &kp N3    &kp N4           &kp N5                       &kp N6    &kp N7           &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp GRAVE  &kp BSLH  &kp LBKT  &hm LSHIFT RBKT  &kp PRCNT                    &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &trans     &trans    &trans    &trans           &trans                       &kp DEL   &kp TAB          &trans  &trans     &trans  &trans
-        &trans     &trans    &trans    &trans           &trans     &trans    &trans  &trans                             &trans     &trans
+&trans  &kp N1     &kp N2    &kp N3    &kp N4           &kp N5                       &kp N6     &kp N7           &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp GRAVE  &kp BSLH  &kp LBKT  &hm LSHIFT RBKT  &kp PRCNT                    &kp LEFT   &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &trans     &trans    &trans    &trans           &trans                       &kp GRAVE  &kp SQT          &trans  &trans     &trans  &trans
+        &trans     &trans    &trans    &trans           &trans     &trans    &trans  &trans                              &trans     &trans
             >;
         };
 
