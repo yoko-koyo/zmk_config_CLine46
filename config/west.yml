@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/caksoylar
     - name: takamaru-fpv  # <-- Battery level smoothing
       url-base: https://github.com/takamaru-fpv
+    - name: oleksandrmaslov  # <-- Pointer acceleration
+      url-base: https://github.com/oleksandrmaslov
 
   projects:
     # ZMK: DYA Studio 用カスタム RPC サブシステム付き cormoran fork
@@ -38,5 +40,8 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3-branch
+    - name: zmk-pointing-acceleration
+      remote: oleksandrmaslov
+      revision: main
   self:
     path: config

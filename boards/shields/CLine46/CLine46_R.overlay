@@ -3,9 +3,24 @@
 #include <input/processors.dtsi>
 #include <input/processors/runtime-input-processor.dtsi>
 #include <behaviors/battery_history_request.dtsi>
+#include <behaviors/input_gestures_accel.dtsi>
 
 &default_transform {
     col-offset = <6>;
+};
+
+/* トラックボールのポインタ加速。カーソルを速く動かすほど移動量が
+   大きくなる。値は千分率(1000=等倍)。cpi=400 前提の counts/sec。 */
+
+&pointer_accel {
+    input-type = <INPUT_EV_REL>;
+    track-remainders;            // 端数を蓄積して精度低下を防ぐ
+
+    min-factor = <900>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
+    max-factor = <1500>;         // 速く動かした時は最大2.5倍まで加速
+    speed-threshold = <1000>;    // これ未満の速度では等倍(1.0x)
+    speed-max = <5000>;          // これ以上の速度で最大倍率に到達
+    acceleration-exponent = <2>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
 };
 
 
@@ -81,7 +96,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        cpi = <380>;   // カーソル速度。下げるほど遅くなる (200刻み)
+        cpi = <400>;   // カーソル速度。下げるほど遅くなる (200刻み)
         //swap-xy;
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
@@ -93,6 +108,7 @@
 &trackball_listener {
     status = "okay";
     input-processors =<&mouse_runtime_input_processor>,
+        <&pointer_accel>,                                   //ポインタ加速
         //<&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;         //Y軸反転
         //<&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
         <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転

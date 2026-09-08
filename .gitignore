@@ -20,3 +20,4 @@ zmk-module-settings-rpc/
 zmk-module-runtime-input-processor/
 zmk-pmw3610-driver/
 zmk-rgbled-widget/
+zmk-pointing-acceleration/
