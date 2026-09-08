@@ -153,7 +153,7 @@
         // ESC : 右手ホーム段 [J] + [L]
 
         combo_esc {
-            bindings = <&kp ESC>;
+            bindings = <&kp RET>;
             key-positions = <19 21>;
             timeout-ms = <60>;
         };
@@ -165,19 +165,6 @@
             key-positions = <18 19>;
         };
 
-        // かな : [A] + [-]
-
-        bs {
-            bindings = <&kp LANG1>;
-            key-positions = <13 22>;
-        };
-
-        // 英数 : [S] + [L]
-
-        l2 {
-            bindings = <&kp LANG2>;
-            key-positions = <14 21>;
-        };
     };
 
     behaviors {
@@ -193,14 +180,25 @@
             bindings = <&ctrl_window>, <&kp>;
         };
 
+        // ホールド: モディファイア(&kp) / タップ: レイヤートグル(&tog)
+        // &hm_tog LCTRL SCROLL のように使う
+
+        hm_tog: hm_tog {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM_TOG";
+            #binding-cells = <2>;
+            tapping-term-ms = <180>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&tog>;
+        };
+
         // 一般的なHold-Tap (Hold: Modifier, Tap: Key)
 
         hm: hm {
             compatible = "zmk,behavior-hold-tap";
             label = "HM";
             #binding-cells = <2>;
-            tapping-term-ms = <130>;   // タップの反応を早くするため 160 から短縮
-            quick-tap-ms = <0>;        // 連打からの長押しでタップ側(RET)がリピートするのを禁止
+            tapping-term-ms = <180>;
             flavor = "hold-preferred";
             bindings = <&kp>, <&kp>;
         };
@@ -271,7 +269,7 @@
         default_layer {
             bindings = <
 &kp TAB          &kp Q   &kp W         &kp E       &kp R           &kp T                                            &kp Y             &kp U  &kp I      &kp O     &kp P               &kp EQUAL
-&hm LCTRL LANG1  &kp A   &kp S         &kp D       &kp F           &kp G                                            &kp H             &kp J  &kp K      &kp L     &kp SEMI            &kp MINUS
+&hm_tog LCTRL SCROLL  &kp A   &kp S         &kp D       &kp F           &kp G                                            &kp H             &kp J  &kp K      &kp L     &kp SEMI            &kp MINUS
 &kp LSHIFT       &kp Z   &kp X         &kp C       &kp V           &kp B                                            &kp N             &kp M  &kp COMMA  &kp DOT   &kp SLASH           &hm RSHIFT BSLH
                  &trans  &mo WIRELESS  &mo SCROLL  &hm LALT LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET                    &mkp MB1  &lt_mkp SCROLL MB2
             >;
