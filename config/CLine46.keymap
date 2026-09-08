@@ -153,7 +153,7 @@
         // ESC : 右手ホーム段 [J] + [L]
 
         combo_esc {
-            bindings = <&kp RET>;
+            bindings = <&kp ESC>;
             key-positions = <19 21>;
             timeout-ms = <60>;
         };
@@ -268,10 +268,10 @@
 
         default_layer {
             bindings = <
-&kp TAB          &kp Q   &kp W         &kp E       &kp R           &kp T                                            &kp Y             &kp U  &kp I      &kp O     &kp P               &kp EQUAL
-&hm_tog LCTRL SCROLL  &kp A   &kp S         &kp D       &kp F           &kp G                                            &kp H             &kp J  &kp K      &kp L     &kp SEMI            &kp MINUS
-&kp LSHIFT       &kp Z   &kp X         &kp C       &kp V           &kp B                                            &kp N             &kp M  &kp COMMA  &kp DOT   &kp SLASH           &hm RSHIFT BSLH
-                 &trans  &mo WIRELESS  &mo SCROLL  &hm LALT LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET                    &mkp MB1  &lt_mkp SCROLL MB2
+&kp CAPSLOCK          &kp Q   &kp W         &kp E       &kp R           &kp T                                            &kp Y       &kp U  &kp I      &kp O     &kp P          &kp EQUAL
+&hm_tog LCTRL SCROLL  &kp A   &kp S         &kp D       &kp F           &kp G                                            &kp H       &kp J  &kp K      &kp L     &kp SEMI       &kp MINUS
+&kp LSHIFT            &kp Z   &kp X         &kp C       &kp V           &kp B                                            &kp N       &kp M  &kp COMMA  &kp DOT   &kp SLASH      &hm RSHIFT BSLH
+                      &trans  &mo WIRELESS  &mo SCROLL  &hm LALT LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER RET              &mkp MB1  &lt_mkp SCROLL MB2
             >;
         };
 
