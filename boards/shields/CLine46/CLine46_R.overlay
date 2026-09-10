@@ -16,11 +16,11 @@
     input-type = <INPUT_EV_REL>;
     track-remainders;            // 端数を蓄積して精度低下を防ぐ
 
-    min-factor = <900>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
+    min-factor = <800>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
     max-factor = <1500>;         // 速く動かした時は最大2.5倍まで加速
     speed-threshold = <1000>;    // これ未満の速度では等倍(1.0x)
     speed-max = <5000>;          // これ以上の速度で最大倍率に到達
-    acceleration-exponent = <2>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
+    acceleration-exponent = <3>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
 };
 
 
