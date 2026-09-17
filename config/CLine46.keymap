@@ -235,28 +235,12 @@
             bindings = <&kp>, <&kp>;
         };
 
-        lt_mkp: lt_mkp {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_MKP";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&mo>, <&mkp>;
-        };
-
         lt_k: lt_k {
             compatible = "zmk,behavior-hold-tap";
             label = "LT_K";
             #binding-cells = <2>;
-
-            // tap-preferred: 他キーを押してもホールドに確定しない。
-            //   速くタップしたときに NUMBER レイヤーへ化けるのを防ぐ。
-            //   この flavor では tapping-term だけがホールドの条件になるため、
-            //   短いほうがレイヤーに早く入り、意図しない RET が出る余地も小さい。
-
-            tapping-term-ms = <130>;
-            flavor = "tap-preferred";
+            tapping-term-ms = <180>;
+            flavor = "hold-preferred";
             quick-tap-ms = <0>;        // 連打からの長押しでタップ側(RET)がリピートするのを禁止
             bindings = <&mo>, <&kp>;
         };
