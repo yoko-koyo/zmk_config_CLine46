@@ -16,7 +16,7 @@
     input-type = <INPUT_EV_REL>;
     track-remainders;            // 端数を蓄積して精度低下を防ぐ
 
-    min-factor = <600>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
+    min-factor = <500>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
     max-factor = <1600>;         // 速く動かした時は最大2.5倍まで加速
     speed-threshold = <1000>;    // これ未満の速度では等倍(1.0x)
     speed-max = <5000>;          // これ以上の速度で最大倍率に到達
