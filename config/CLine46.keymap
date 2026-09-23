@@ -51,34 +51,34 @@
 
 / {
     macros {
-        /* ()を入力してカーソルを中に戻す */
+        /* ()を入力 */
 
         macro_parens: macro_parens {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LPAR &kp RPAR &kp LEFT>;
+            bindings = <&kp LPAR &kp RPAR>;
         };
 
-        /* []を入力してカーソルを中に戻す */
+        /* []を入力 */
 
         macro_brackets: macro_brackets {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LBKT &kp RBKT &kp LEFT>;
+            bindings = <&kp LBKT &kp RBKT>;
         };
 
-        /* {}を入力してカーソルを中に戻す */
+        /* {}を入力 */
 
         macro_braces: macro_braces {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LBRC &kp RBRC &kp LEFT>;
+            bindings = <&kp LBRC &kp RBRC>;
         };
 
         /* 押している間 LCTRL を保持しつつ WINDOW レイヤーを有効にする。
