@@ -113,28 +113,28 @@
 
         combo_caret {
             bindings = <&kp CARET>;
-            key-positions = <5 39>;
+            key-positions = <1 2>;
         };
 
         // % : 左手上段 [W] + [E]
 
         combo_prcnt {
             bindings = <&kp PRCNT>;
-            key-positions = <4 39>;
+            key-positions = <2 3>;
         };
 
         // & : 左手上段 [E] + [R]
 
         combo_amps {
             bindings = <&kp AMPS>;
-            key-positions = <3 39>;
+            key-positions = <3 4>;
         };
 
         // * : 左手上段 [R] + [T]
 
         combo_star {
             bindings = <&kp STAR>;
-            key-positions = <2 39>;
+            key-positions = <4 5>;
         };
 
         // ===== 最上段 [Y]〜[P] (右手) =====
@@ -171,28 +171,28 @@
 
         combo_excl {
             bindings = <&kp EXCL>;
-            key-positions = <14 39>;
+            key-positions = <13 14>;
         };
 
         // # : 左手ホーム段 [S] + [D]
 
         combo_hash {
             bindings = <&kp HASH>;
-            key-positions = <15 39>;
+            key-positions = <14 15>;
         };
 
         // @ : 左手ホーム段 [D] + [F]
 
         combo_at {
             bindings = <&kp AT>;
-            key-positions = <16 39>;
+            key-positions = <15 16>;
         };
 
         // $ : 左手ホーム段 [F] + [G]
 
         combo_dllr {
             bindings = <&kp DLLR>;
-            key-positions = <13 39>;
+            key-positions = <16 17>;
         };
 
         // ===== ホーム段 [D][F]〜[H][J][K][L] (右手) =====
