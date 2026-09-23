@@ -212,9 +212,10 @@
 
         // ; : 右手ホーム段 [J] + [K]
 
-        combo_semi {
-            bindings = <&kp SEMI>;
-            key-positions = <19 20>;
+        combo_esc {
+            bindings = <&kp RET>;
+            key-positions = <19 21>;
+            timeout-ms = <60>;
         };
 
         // ESC : 右手ホーム段 [J] + [L]
@@ -234,9 +235,9 @@
 
         // \ : 右手ホーム段 [L] + [;]
 
-        combo_bslh {
-            bindings = <&kp BSLH>;
-            key-positions = <21 22>;
+        combo_que {
+            bindings = <&kp QMARK>;
+            key-positions = <31 32>;
         };
 
         // ===== 下段 [N][M][,][.] =====
@@ -370,10 +371,10 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1    &kp N2   &kp N3    &kp N4           &kp N5                       &kp N6    &kp N7           &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp LPAR       &kp RPAR           &kp LBKT       &kp RBKT  &trans                     &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &macro_parens  &macro_brackets    &macro_braces  &trans    &trans                     &kp ESC   &kp TAB          &trans  &trans     &trans  &trans
-        &trans    &trans   &trans    &trans           &trans     &trans    &trans  &trans                             &trans     &trans
+&trans  &kp N1         &kp N2           &kp N3         &kp N4    &kp N5                    &kp N6    &kp N7           &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp LPAR       &kp RPAR         &kp LBKT       &kp RBKT  &trans                    &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &macro_parens  &macro_brackets  &macro_braces  &trans    &trans                    &kp ESC   &kp TAB          &trans  &trans     &trans  &trans
+        &trans         &trans           &trans         &trans    &trans  &trans    &trans  &trans                             &trans     &trans
             >;
         };
 
