@@ -212,6 +212,13 @@
 
         // ; : 右手ホーム段 [J] + [K]
 
+        combo_semi {
+            bindings = <&kp SEMI>;
+            key-positions = <19 20>;
+        };
+
+        // Enter : 右手ホーム段 [J] + [L]
+
         combo_ret {
             bindings = <&kp RET>;
             key-positions = <19 21>;
@@ -223,6 +230,13 @@
         combo_sqt {
             bindings = <&kp SQT>;
             key-positions = <20 21>;
+        };
+
+        // \ : 右手ホーム段 [L] + 隣
+
+        combo_bslh {
+            bindings = <&kp BSLH>;
+            key-positions = <21 22>;
         };
 
         // ===== 下段 [N][M][,][.] =====
