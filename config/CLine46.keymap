@@ -108,46 +108,87 @@
     combos {
         compatible = "zmk,combos";
 
-        // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
+        // ===== 最上段 [Q]〜[T] (左手) =====
 
-        BluetoothLayer {
-            bindings = <&mo WIRELESS>;
-            key-positions = <43 44 45>;
+        // @ : 左手上段 [Q] + [W]
+
+        combo_at {
+            bindings = <&kp AT>;
+            key-positions = <1 2>;
         };
 
-        // ' : 右手ホーム段 [K] + [L]
+        // ! : 左手上段 [W] + [E]
 
-        combo_sqt {
-            bindings = <&kp SQT>;
-            key-positions = <21 20>;
+        combo_excl {
+            bindings = <&kp EXCL>;
+            key-positions = <2 3>;
         };
 
-        // ; : 右手ホーム段 [J] + [K]
+        // # : 左手上段 [E] + [R]
 
-        combo_semi {
-            bindings = <&kp SEMI>;
-            key-positions = <20 19>;
+        combo_hash {
+            bindings = <&kp HASH>;
+            key-positions = <3 4>;
         };
 
-        // / : 右手下段 [,] + [.]
+        // $ : 左手上段 [R] + [T]
 
-        combo_slash {
-            bindings = <&kp SLASH>;
-            key-positions = <32 33>;
+        combo_dllr {
+            bindings = <&kp DLLR>;
+            key-positions = <4 5>;
         };
 
-        // ` : 右手上段 [I] + [O]
+        // ===== 最上段 [Y]〜[P] (右手) =====
+
+        // ~ : 右手上段 [Y] + [U]
+
+        combo_tilde {
+            bindings = <&kp TILDE>;
+            key-positions = <6 7>;
+        };
+
+        // : : 右手上段 [U] + [I]
+
+        combo_colon {
+            bindings = <&kp COLON>;
+            key-positions = <7 8>;
+        };
+
+        // " : 右手上段 [I] + [O]
+
+        combo_dqt {
+            bindings = <&kp DQT>;
+            key-positions = <8 9>;
+        };
+
+        // | : 右手上段 [O] + [P]
+
+        combo_pipe {
+            bindings = <&kp PIPE>;
+            key-positions = <9 10>;
+        };
+
+        // ===== ホーム段 [D][F]〜[H][J][K][L][;] =====
+
+        // (){} : [D] + [F] + [J] + [K]
+
+        combo_if {
+            bindings = <&macro_if>;
+            key-positions = <15 16 19 20>;
+        };
+
+        // ` : 右手ホーム段 [H] + [J]
 
         combo_grave {
             bindings = <&kp GRAVE>;
             key-positions = <18 19>;
         };
 
-        // (){} : [D] + [F] + [J] + [K]
+        // ; : 右手ホーム段 [J] + [K]
 
-        combo_m_if {
-            bindings = <&macro_if>;
-            key-positions = <19 20 16 15>;
+        combo_semi {
+            bindings = <&kp SEMI>;
+            key-positions = <19 20>;
         };
 
         // ESC : 右手ホーム段 [J] + [L]
@@ -158,31 +199,36 @@
             timeout-ms = <60>;
         };
 
-        // \ : 右手ホーム段 [H] + [J]
+        // ' : 右手ホーム段 [K] + [L]
 
-        combo_back_slash {
+        combo_sqt {
+            bindings = <&kp SQT>;
+            key-positions = <20 21>;
+        };
+
+        // \ : 右手ホーム段 [L] + [;]
+
+        combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <22 21>;
+            key-positions = <21 22>;
         };
 
-        clon {
-            bindings = <&kp COLON>;
-            key-positions = <7 8>;
+        // ===== 下段 [,][.] =====
+
+        // / : 右手下段 [,] + [.]
+
+        combo_slash {
+            bindings = <&kp SLASH>;
+            key-positions = <32 33>;
         };
 
-        tilda {
-            bindings = <&kp TILDE>;
-            key-positions = <7 6>;
-        };
+        // ===== 親指キー =====
 
-        double {
-            bindings = <&kp DQT>;
-            key-positions = <8 9>;
-        };
+        // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
 
-        bsl {
-            bindings = <&kp PIPE>;
-            key-positions = <10 9>;
+        combo_bt {
+            bindings = <&mo WIRELESS>;
+            key-positions = <43 44 45>;
         };
     };
 
