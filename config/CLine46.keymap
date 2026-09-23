@@ -109,37 +109,35 @@
         compatible = "zmk,combos";
 
         // ===== 最上段 [Q]〜[T] (左手) =====
-
         // @ : 左手上段 [Q] + [W]
 
         combo_at {
             bindings = <&kp AT>;
-            key-positions = <1 2>;
+            key-positions = <13 14>;
         };
 
         // ! : 左手上段 [W] + [E]
 
         combo_excl {
             bindings = <&kp EXCL>;
-            key-positions = <2 3>;
+            key-positions = <14 15>;
         };
 
         // # : 左手上段 [E] + [R]
 
         combo_hash {
             bindings = <&kp HASH>;
-            key-positions = <3 4>;
+            key-positions = <15 16>;
         };
 
         // $ : 左手上段 [R] + [T]
 
         combo_dllr {
             bindings = <&kp DLLR>;
-            key-positions = <4 5>;
+            key-positions = <16 17>;
         };
 
         // ===== 最上段 [Y]〜[P] (右手) =====
-
         // ~ : 右手上段 [Y] + [U]
 
         combo_tilde {
@@ -169,7 +167,6 @@
         };
 
         // ===== ホーム段 [D][F]〜[H][J][K][L][;] =====
-
         // (){} : [D] + [F] + [J] + [K]
 
         combo_if {
@@ -214,7 +211,6 @@
         };
 
         // ===== 下段 [,][.] =====
-
         // / : 右手下段 [,] + [.]
 
         combo_slash {
@@ -223,12 +219,16 @@
         };
 
         // ===== 親指キー =====
-
         // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
 
         combo_bt {
             bindings = <&mo WIRELESS>;
             key-positions = <43 44 45>;
+        };
+
+        combo_que {
+            bindings = <&kp QMARK>;
+            key-positions = <30 31>;
         };
     };
 
