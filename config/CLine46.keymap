@@ -108,35 +108,6 @@
     combos {
         compatible = "zmk,combos";
 
-        // ===== 最上段 [Q]〜[T] (左手) =====
-        // @ : 左手上段 [Q] + [W]
-
-        combo_at {
-            bindings = <&kp AT>;
-            key-positions = <13 14>;
-        };
-
-        // ! : 左手上段 [W] + [E]
-
-        combo_excl {
-            bindings = <&kp EXCL>;
-            key-positions = <14 15>;
-        };
-
-        // # : 左手上段 [E] + [R]
-
-        combo_hash {
-            bindings = <&kp HASH>;
-            key-positions = <15 16>;
-        };
-
-        // $ : 左手上段 [R] + [T]
-
-        combo_dllr {
-            bindings = <&kp DLLR>;
-            key-positions = <16 17>;
-        };
-
         // ===== 最上段 [Y]〜[P] (右手) =====
         // ~ : 右手上段 [Y] + [U]
 
@@ -166,7 +137,57 @@
             key-positions = <9 10>;
         };
 
-        // ===== ホーム段 [D][F]〜[H][J][K][L][;] =====
+        // ===== ホーム段 [A]〜[G] (左手) =====
+        // @ : 左手ホーム段 [A] + [S]
+
+        combo_at {
+            bindings = <&kp AT>;
+            key-positions = <13 14>;
+        };
+
+        // ! : 左手ホーム段 [S] + [D]
+
+        combo_excl {
+            bindings = <&kp EXCL>;
+            key-positions = <14 15>;
+        };
+
+        // # : 左手ホーム段 [D] + [F]
+
+        combo_hash {
+            bindings = <&kp HASH>;
+            key-positions = <15 16>;
+        };
+
+        // $ : 左手ホーム段 [F] + [G]
+
+        combo_dllr {
+            bindings = <&kp DLLR>;
+            key-positions = <16 17>;
+        };
+
+        // % : 左手ホーム段 [A] + [D] (1キー飛ばし)
+
+        combo_prcnt {
+            bindings = <&kp PRCNT>;
+            key-positions = <13 15>;
+        };
+
+        // ^ : 左手ホーム段 [S] + [F] (1キー飛ばし)
+
+        combo_caret {
+            bindings = <&kp CARET>;
+            key-positions = <14 16>;
+        };
+
+        // & : 左手ホーム段 [D] + [G] (1キー飛ばし)
+
+        combo_amps {
+            bindings = <&kp AMPS>;
+            key-positions = <15 17>;
+        };
+
+        // ===== ホーム段 [D][F]〜[H][J][K][L][;] (右手) =====
         // (){} : [D] + [F] + [J] + [K]
 
         combo_if {
@@ -210,7 +231,14 @@
             key-positions = <21 22>;
         };
 
-        // ===== 下段 [,][.] =====
+        // ===== 下段 [N][M][,][.] =====
+        // ? : 右手下段 [N] + [M]
+
+        combo_que {
+            bindings = <&kp QMARK>;
+            key-positions = <30 31>;
+        };
+
         // / : 右手下段 [,] + [.]
 
         combo_slash {
@@ -224,11 +252,6 @@
         combo_bt {
             bindings = <&mo WIRELESS>;
             key-positions = <43 44 45>;
-        };
-
-        combo_que {
-            bindings = <&kp QMARK>;
-            key-positions = <30 31>;
         };
     };
 
