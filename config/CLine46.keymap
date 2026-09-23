@@ -195,12 +195,12 @@
             key-positions = <16 17>;
         };
 
-        // ===== ホーム段 [H][J][K][L] (右手) =====
-        // (){} : 右手ホーム段 [H] + [J] + [K] + [L]
+        // ===== ホーム段 [D][F]〜[H][J][K][L] (右手) =====
+        // (){} : [D] + [F] + [J] + [K]
 
         combo_if {
             bindings = <&macro_if>;
-            key-positions = <18 19 20 21>;
+            key-positions = <15 16 19 20>;
         };
 
         // ` : 右手ホーム段 [H] + [J]
@@ -371,8 +371,8 @@
         NUMBER {
             bindings = <
 &trans  &kp N1         &kp N2           &kp N3         &kp N4    &kp N5                    &kp N6    &kp N7           &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp LPAR       &kp RPAR         &kp LBKT       &kp RBKT  &trans                    &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &macro_parens  &macro_brackets  &macro_braces  &trans    &trans                    &kp ESC   &kp TAB          &trans  &trans     &trans  &trans
+&trans  &trans  &kp LPAR       &kp RPAR         &kp LBKT       &kp RBKT                    &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &trans  &trans         &macro_parens    &macro_brackets  &macro_braces             &kp ESC   &kp TAB          &trans  &trans     &trans  &trans
         &trans         &trans           &trans         &trans    &trans  &trans    &trans  &trans                             &trans     &trans
             >;
         };
