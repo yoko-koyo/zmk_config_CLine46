@@ -212,10 +212,10 @@
 
         // ; : 右手ホーム段 [J] + [K]
 
-        combo_esc {
+        combo_ret {
             bindings = <&kp RET>;
             key-positions = <19 21>;
-            timeout-ms = <60>;
+            timeout-ms = <250>;
         };
 
         // ' : 右手ホーム段 [K] + [L]
@@ -230,7 +230,7 @@
 
         combo_que {
             bindings = <&kp QMARK>;
-            key-positions = <30 31>;
+            key-positions = <31 32>;
         };
 
         // / : 右手下段 [,] + [.]
