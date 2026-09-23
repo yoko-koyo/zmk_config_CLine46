@@ -108,6 +108,35 @@
     combos {
         compatible = "zmk,combos";
 
+        // ===== 最上段 [Q]〜[T] (左手) =====
+        // ^ : 左手上段 [Q] + [W]
+
+        combo_caret {
+            bindings = <&kp CARET>;
+            key-positions = <1 2>;
+        };
+
+        // % : 左手上段 [W] + [E]
+
+        combo_prcnt {
+            bindings = <&kp PRCNT>;
+            key-positions = <2 3>;
+        };
+
+        // & : 左手上段 [E] + [R]
+
+        combo_amps {
+            bindings = <&kp AMPS>;
+            key-positions = <3 4>;
+        };
+
+        // * : 左手上段 [R] + [T]
+
+        combo_star {
+            bindings = <&kp STAR>;
+            key-positions = <4 5>;
+        };
+
         // ===== 最上段 [Y]〜[P] (右手) =====
         // ~ : 右手上段 [Y] + [U]
 
@@ -138,25 +167,25 @@
         };
 
         // ===== ホーム段 [A]〜[G] (左手) =====
-        // @ : 左手ホーム段 [A] + [S]
-
-        combo_at {
-            bindings = <&kp AT>;
-            key-positions = <16 15>;
-        };
-
-        // ! : 左手ホーム段 [S] + [D]
+        // ! : 左手ホーム段 [A] + [S]
 
         combo_excl {
             bindings = <&kp EXCL>;
-            key-positions = <14 13>;
+            key-positions = <13 14>;
         };
 
-        // # : 左手ホーム段 [D] + [F]
+        // # : 左手ホーム段 [S] + [D]
 
         combo_hash {
             bindings = <&kp HASH>;
-            key-positions = <15 14>;
+            key-positions = <14 15>;
+        };
+
+        // @ : 左手ホーム段 [D] + [F]
+
+        combo_at {
+            bindings = <&kp AT>;
+            key-positions = <15 16>;
         };
 
         // $ : 左手ホーム段 [F] + [G]
@@ -164,27 +193,6 @@
         combo_dllr {
             bindings = <&kp DLLR>;
             key-positions = <16 17>;
-        };
-
-        // % : 左手ホーム段 [A] + [D] (1キー飛ばし)
-
-        combo_prcnt {
-            bindings = <&kp PRCNT>;
-            key-positions = <2 3>;
-        };
-
-        // ^ : 左手ホーム段 [S] + [F] (1キー飛ばし)
-
-        combo_caret {
-            bindings = <&kp CARET>;
-            key-positions = <2 1>;
-        };
-
-        // & : 左手ホーム段 [D] + [G] (1キー飛ばし)
-
-        combo_amps {
-            bindings = <&kp AMPS>;
-            key-positions = <3 4>;
         };
 
         // ===== ホーム段 [D][F]〜[H][J][K][L][;] (右手) =====
@@ -252,11 +260,6 @@
         combo_bt {
             bindings = <&mo WIRELESS>;
             key-positions = <43 44 45>;
-        };
-
-        combo_star {
-            bindings = <&kp STAR>;
-            key-positions = <4 5>;
         };
     };
 
