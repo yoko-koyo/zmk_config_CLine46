@@ -10,13 +10,13 @@
 };
 
 /* トラックボールのポインタ加速。カーソルを速く動かすほど移動量が
-   大きくなる。値は千分率(1000=等倍)。cpi=400 前提の counts/sec。 */
+   大きくなる。値は千分率(1000=等倍)。cpi=390 前提の counts/sec。 */
 
 &pointer_accel {
     input-type = <INPUT_EV_REL>;
     track-remainders;            // 端数を蓄積して精度低下を防ぐ
 
-    min-factor = <1000>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
+    min-factor = <1000>;          // ゆっくり動かした時は等倍(1.0x)
     max-factor = <2500>;         // 速く動かした時は最大2.5倍まで加速
     speed-threshold = <1300>;    // これ未満の速度では等倍(1.0x)
     speed-max = <1800>;          // これ以上の速度で最大倍率に到達
@@ -96,7 +96,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        cpi = <390>;   // カーソル速度。下げるほど遅くなる (200刻み)
+        cpi = <390>;   // カーソル速度。下げるほど遅くなる
         //swap-xy;
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
