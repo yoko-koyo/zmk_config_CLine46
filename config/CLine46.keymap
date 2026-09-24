@@ -147,40 +147,7 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // ===== ホーム段 [A]〜[G] (左手) =====
-        // ! : 左手ホーム段 [A] + [S]
-
-        combo_excl {
-            bindings = <&kp EXCL>;
-            key-positions = <14 16>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // # : 左手ホーム段 [S] + [D]
-
-        combo_hash {
-            bindings = <&kp HASH>;
-            key-positions = <14 15>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // @ : 左手ホーム段 [D] + [F]
-
-        combo_at {
-            bindings = <&kp AT>;
-            key-positions = <15 16>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // $ : 左手ホーム段 [F] + [G]
-
-        combo_dllr {
-            bindings = <&kp DLLR>;
-            key-positions = <16 17>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // ===== 最上段 [Y]〜[P] (右手) =====
+        // ===== 最上段 [Y]〜[O] (右手) =====
         // ~ : 右手上段 [Y] + [U]
 
         combo_tilde {
@@ -197,6 +164,14 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
+        // ? : 右手上段 [U] + [O] (1キー飛ばし)
+
+        combo_que {
+            bindings = <&kp QMARK>;
+            key-positions = <7 9>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
         // " : 右手上段 [I] + [O]
 
         combo_dqt {
@@ -205,15 +180,31 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // | : 右手上段 [O] + [P]
+        // ===== ホーム段 [S][D]〜[G] (左手) =====
+        // # : 左手ホーム段 [S] + [D]
 
-        combo_pipe {
-            bindings = <&kp PIPE>;
-            key-positions = <31 32>;
+        combo_hash {
+            bindings = <&kp HASH>;
+            key-positions = <14 15>;
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // ===== ホーム段 [D][F]〜[H][J][K][L] (右手) =====
+        // ! : 左手ホーム段 [S] + [F] (1キー飛ばし)
+
+        combo_excl {
+            bindings = <&kp EXCL>;
+            key-positions = <14 16>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // @ : 左手ホーム段 [D] + [F]
+
+        combo_at {
+            bindings = <&kp AT>;
+            key-positions = <15 16>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
         // (){} : [D] + [F] + [J] + [K]
 
         combo_if {
@@ -222,6 +213,15 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
+        // $ : 左手ホーム段 [F] + [G]
+
+        combo_dllr {
+            bindings = <&kp DLLR>;
+            key-positions = <16 17>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // ===== ホーム段 [H]〜[L] (右手) =====
         // ` : 右手ホーム段 [H] + [J]
 
         combo_grave {
@@ -238,7 +238,14 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // Enter : 右手ホーム段 [J] + [L]
+        // / : 右手ホーム段 [J] + [L] (1キー飛ばし)
+
+        combo_slash {
+            bindings = <&kp SLASH>;
+            key-positions = <19 21>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
         // ' : 右手ホーム段 [K] + [L]
 
         combo_sqt {
@@ -247,7 +254,16 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // \ : 右手ホーム段 [H] + [K] (1キー飛ばし。L の二重入力を避けるため L を使わない組み合わせに)
+        // ===== 下段 [M][,][.] (右手) =====
+        // | : 右手下段 [M] + [,]
+
+        combo_pipe {
+            bindings = <&kp PIPE>;
+            key-positions = <31 32>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // \ : 右手下段 [,] + [.]
 
         combo_bslh {
             bindings = <&kp BSLH>;
@@ -255,25 +271,8 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // ===== 下段 [N][M][,][.] =====
-        // ? : 右手下段 [N] + [M]
-
-        combo_que {
-            bindings = <&kp QMARK>;
-            key-positions = <7 9>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // / : 右手下段 [,] + [.]
-
-        combo_slash {
-            bindings = <&kp SLASH>;
-            key-positions = <19 21>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
         // ===== 親指キー =====
-        // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
+        // Bluetoothレイヤー(6)呼び出し : 右手親指キー2つ同時押し
         // (MOUSEレイヤーでも押せるよう、これだけは除外しない)
 
         combo_bt {
