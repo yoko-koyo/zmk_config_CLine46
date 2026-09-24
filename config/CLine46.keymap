@@ -146,39 +146,6 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // ===== 最上段 [Y]〜[P] (右手) =====
-        // ~ : 右手上段 [Y] + [U]
-
-        combo_tilde {
-            bindings = <&kp TILDE>;
-            key-positions = <6 7>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // : : 右手上段 [U] + [I]
-
-        combo_colon {
-            bindings = <&kp COLON>;
-            key-positions = <7 8>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // " : 右手上段 [I] + [O]
-
-        combo_dqt {
-            bindings = <&kp DQT>;
-            key-positions = <8 9>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
-        // | : 右手上段 [O] + [P]
-
-        combo_pipe {
-            bindings = <&kp PIPE>;
-            key-positions = <9 10>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
         // ===== ホーム段 [A]〜[G] (左手) =====
         // ! : 左手ホーム段 [A] + [S]
 
@@ -209,6 +176,39 @@
         combo_dllr {
             bindings = <&kp DLLR>;
             key-positions = <16 17>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // ===== 最上段 [Y]〜[P] (右手) =====
+        // ~ : 右手上段 [Y] + [U]
+
+        combo_tilde {
+            bindings = <&kp TILDE>;
+            key-positions = <6 7>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // : : 右手上段 [U] + [I]
+
+        combo_colon {
+            bindings = <&kp COLON>;
+            key-positions = <7 8>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // " : 右手上段 [I] + [O]
+
+        combo_dqt {
+            bindings = <&kp DQT>;
+            key-positions = <8 9>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // | : 右手上段 [O] + [P]
+
+        combo_pipe {
+            bindings = <&kp PIPE>;
+            key-positions = <9 10>;
             layers = <ALL_BUT_MOUSE>;
         };
 
