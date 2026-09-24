@@ -18,6 +18,7 @@
 // MOUSE レイヤーを除くレイヤー一覧。MOUSE レイヤー中のキー(クリック/
 // スクロール切り替え等)と物理位置が被るコンボが誤発火・遅延しないよう、
 // 記号系コンボはこの一覧を layers に指定して MOUSE レイヤーでは無効にする
+
 #define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WIRELESS WINDOW
 
 // mt (ESC/LCTRL) をモディファイア優先の判定に
@@ -257,7 +258,7 @@
 
         combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <18 20>;
+            key-positions = <30 31>;
             layers = <ALL_BUT_MOUSE>;
         };
 
