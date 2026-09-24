@@ -152,7 +152,7 @@
 
         combo_excl {
             bindings = <&kp EXCL>;
-            key-positions = <13 14>;
+            key-positions = <14 16>;
             layers = <ALL_BUT_MOUSE>;
         };
 
