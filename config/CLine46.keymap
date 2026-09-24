@@ -152,7 +152,7 @@
 
         combo_excl {
             bindings = <&kp EXCL>;
-            key-positions = <14 16>;
+            key-positions = <13 14>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -209,7 +209,7 @@
 
         combo_pipe {
             bindings = <&kp PIPE>;
-            key-positions = <31 30>;
+            key-positions = <9 10>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -239,6 +239,13 @@
         };
 
         // Enter : 右手ホーム段 [J] + [L]
+
+        combo_ret {
+            bindings = <&kp RET>;
+            key-positions = <19 21>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
         // ' : 右手ホーム段 [K] + [L]
 
         combo_sqt {
@@ -251,7 +258,7 @@
 
         combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <33 32>;
+            key-positions = <18 20>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -260,7 +267,7 @@
 
         combo_que {
             bindings = <&kp QMARK>;
-            key-positions = <7 9>;
+            key-positions = <31 32>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -268,7 +275,7 @@
 
         combo_slash {
             bindings = <&kp SLASH>;
-            key-positions = <19 21>;
+            key-positions = <32 33>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -278,7 +285,7 @@
 
         combo_bt {
             bindings = <&mo WIRELESS>;
-            key-positions = <44 45>;
+            key-positions = <43 44 45>;
         };
     };
 
