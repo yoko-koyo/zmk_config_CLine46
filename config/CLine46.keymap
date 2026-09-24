@@ -224,7 +224,7 @@
 
         // ` : 右手ホーム段 [H] + [J]
 
-        combo_grave {
+        combo_grave__ {
             bindings = <&kp GRAVE>;
             key-positions = <18 19>;
             layers = <ALL_BUT_MOUSE>;
