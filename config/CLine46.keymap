@@ -168,7 +168,7 @@
 
         combo_que {
             bindings = <&kp QMARK>;
-            key-positions = <7 9>;
+            key-positions = <7 18>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -242,7 +242,7 @@
 
         combo_slash {
             bindings = <&kp SLASH>;
-            key-positions = <19 21>;
+            key-positions = <8 19>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -252,6 +252,7 @@
             bindings = <&kp SQT>;
             key-positions = <20 21>;
             layers = <ALL_BUT_MOUSE>;
+            timeout-ms = <200>;
         };
 
         // ===== 下段 [M][,][.] (右手) =====
@@ -259,7 +260,7 @@
 
         combo_pipe {
             bindings = <&kp PIPE>;
-            key-positions = <31 32>;
+            key-positions = <19 30>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -267,7 +268,7 @@
 
         combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <32 33>;
+            key-positions = <20 31>;
             layers = <ALL_BUT_MOUSE>;
         };
 
