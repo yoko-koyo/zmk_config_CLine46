@@ -16,11 +16,11 @@
     input-type = <INPUT_EV_REL>;
     track-remainders;            // 端数を蓄積して精度低下を防ぐ
 
-    min-factor = <900>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
-    max-factor = <2000>;         // 速く動かした時は最大2.5倍まで加速
-    speed-threshold = <1000>;    // これ未満の速度では等倍(1.0x)
-    speed-max = <5000>;          // これ以上の速度で最大倍率に到達
-    acceleration-exponent = <2>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
+    min-factor = <1000>;          // ゆっくり動かした時は0.9倍(やや精密寄り)
+    max-factor = <2500>;         // 速く動かした時は最大2.5倍まで加速
+    speed-threshold = <1300>;    // これ未満の速度では等倍(1.0x)
+    speed-max = <1800>;          // これ以上の速度で最大倍率に到達
+    acceleration-exponent = <3>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
 };
 
 
@@ -96,7 +96,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        cpi = <400>;   // カーソル速度。下げるほど遅くなる (200刻み)
+        cpi = <390>;   // カーソル速度。下げるほど遅くなる (200刻み)
         //swap-xy;
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
