@@ -15,6 +15,11 @@
 #define WIRELESS 5
 #define WINDOW 6
 
+// MOUSE レイヤーを除くレイヤー一覧。MOUSE レイヤー中のキー(クリック/
+// スクロール切り替え等)と物理位置が被るコンボが誤発火・遅延しないよう、
+// 記号系コンボはこの一覧を layers に指定して MOUSE レイヤーでは無効にする
+#define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WIRELESS WINDOW
+
 // mt (ESC/LCTRL) をモディファイア優先の判定に
 
 &mt {
@@ -114,6 +119,7 @@
         combo_caret {
             bindings = <&kp CARET>;
             key-positions = <1 2>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // % : 左手上段 [W] + [E]
@@ -121,6 +127,7 @@
         combo_prcnt {
             bindings = <&kp PRCNT>;
             key-positions = <2 3>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // & : 左手上段 [E] + [R]
@@ -128,6 +135,7 @@
         combo_amps {
             bindings = <&kp AMPS>;
             key-positions = <3 4>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // * : 左手上段 [R] + [T]
@@ -135,6 +143,7 @@
         combo_star {
             bindings = <&kp STAR>;
             key-positions = <4 5>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ===== 最上段 [Y]〜[P] (右手) =====
@@ -143,6 +152,7 @@
         combo_tilde {
             bindings = <&kp TILDE>;
             key-positions = <6 7>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // : : 右手上段 [U] + [I]
@@ -150,6 +160,7 @@
         combo_colon {
             bindings = <&kp COLON>;
             key-positions = <7 8>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // " : 右手上段 [I] + [O]
@@ -157,6 +168,7 @@
         combo_dqt {
             bindings = <&kp DQT>;
             key-positions = <8 9>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // | : 右手上段 [O] + [P]
@@ -164,6 +176,7 @@
         combo_pipe {
             bindings = <&kp PIPE>;
             key-positions = <9 10>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ===== ホーム段 [A]〜[G] (左手) =====
@@ -172,6 +185,7 @@
         combo_excl {
             bindings = <&kp EXCL>;
             key-positions = <13 14>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // # : 左手ホーム段 [S] + [D]
@@ -179,6 +193,7 @@
         combo_hash {
             bindings = <&kp HASH>;
             key-positions = <14 15>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // @ : 左手ホーム段 [D] + [F]
@@ -186,6 +201,7 @@
         combo_at {
             bindings = <&kp AT>;
             key-positions = <15 16>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // $ : 左手ホーム段 [F] + [G]
@@ -193,6 +209,7 @@
         combo_dllr {
             bindings = <&kp DLLR>;
             key-positions = <16 17>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ===== ホーム段 [D][F]〜[H][J][K][L] (右手) =====
@@ -201,6 +218,7 @@
         combo_if {
             bindings = <&macro_if>;
             key-positions = <15 16 19 20>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ` : 右手ホーム段 [H] + [J]
@@ -208,6 +226,7 @@
         combo_grave {
             bindings = <&kp GRAVE>;
             key-positions = <18 19>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ; : 右手ホーム段 [J] + [K]
@@ -215,6 +234,7 @@
         combo_semi {
             bindings = <&kp SEMI>;
             key-positions = <19 20>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // Enter : 右手ホーム段 [J] + [L]
@@ -222,7 +242,7 @@
         combo_ret {
             bindings = <&kp RET>;
             key-positions = <19 21>;
-            timeout-ms = <250>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ' : 右手ホーム段 [K] + [L]
@@ -230,13 +250,15 @@
         combo_sqt {
             bindings = <&kp SQT>;
             key-positions = <20 21>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
-        // \ : 右手ホーム段 [L] + 隣
+        // \ : 右手ホーム段 [H] + [K] (1キー飛ばし。L の二重入力を避けるため L を使わない組み合わせに)
 
         combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <21 22>;
+            key-positions = <18 20>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ===== 下段 [N][M][,][.] =====
@@ -245,6 +267,7 @@
         combo_que {
             bindings = <&kp QMARK>;
             key-positions = <31 32>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // / : 右手下段 [,] + [.]
@@ -252,10 +275,12 @@
         combo_slash {
             bindings = <&kp SLASH>;
             key-positions = <32 33>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // ===== 親指キー =====
         // Bluetoothレイヤー(6)呼び出し : 右手親指まわり3キー同時押し
+        // (MOUSEレイヤーでも押せるよう、これだけは除外しない)
 
         combo_bt {
             bindings = <&mo WIRELESS>;
