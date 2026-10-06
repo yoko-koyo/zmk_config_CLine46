@@ -248,7 +248,7 @@
         // ; : 右手ホーム段 [J] + [K]
 
         combo_semi {
-            bindings = <&kp SEMI>;
+            bindings = <&kp BSPC>;
             key-positions = <19 20>;
             layers = <ALL_BUT_MOUSE>;
         };
@@ -256,7 +256,7 @@
         // / : 右手ホーム段 [J] + [L] (1キー飛ばし)
 
         combo_slash {
-            bindings = <&kp SLASH>;
+            bindings = <&kp BSPC>;
             key-positions = <8 19>;
             layers = <ALL_BUT_MOUSE>;
         };
@@ -264,7 +264,7 @@
         // ' : 右手ホーム段 [K] + [L]
 
         combo_sqt {
-            bindings = <&kp SQT>;
+            bindings = <&kp BSPC>;
             key-positions = <20 21>;
             layers = <ALL_BUT_MOUSE>;
             timeout-ms = <200>;
@@ -383,9 +383,9 @@
         default_layer {
             bindings = <
 &kp TAB        &kp Q         &kp W         &kp E       &kp R     &kp T                                            &kp Y               &kp U  &kp I      &kp O             &kp P              &kp MINUS
-&hm LCTRL ESC  &kp A         &kp S         &kp D       &kp F     &kp G                                            &kp H               &kp J  &kp K      &kp L             &kp SEMI           &kp SQT
+&hm LCTRL ESC  &kp A         &kp S         &kp D       &kp F     &kp G                                            &kp H               &kp J  &kp K      &kp L             &kp SEMI           &kp SEMI
 &kp LSHIFT     &kp Z         &kp X         &kp C       &kp V     &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT           &kp SLASH          &hm RSHIFT EQUAL
-               &kp CAPSLOCK  &mo WIRELESS  &mo SCROLL  &kp LALT  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &kp LA(LG(LEFT))  &kp LA(LG(RIGHT))
+               &kp CAPSLOCK  &mo WIRELESS  &mo SCROLL  &kp LALT  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp RET  &lt_k NUMBER LANG1                    &kp LA(LG(LEFT))  &kp LA(LG(RIGHT))
             >;
         };
 
@@ -406,7 +406,7 @@
             bindings = <
 &trans  &kp N1    &kp N2    &kp N3         &kp N4         &kp N5                             &kp N6    &kp N7           &kp N8  &kp N9     &kp N0  &trans
 &trans  &kp LPAR  &kp RPAR  &kp LBKT       &kp RBKT       &macro_brackets                    &kp LEFT  &hm LSHIFT DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &trans    &trans    &macro_parens  &macro_braces  &trans                             &kp ESC   &kp RET          &trans  &trans     &trans  &trans
+&trans  &trans    &trans    &macro_parens  &macro_braces  &trans                             &kp ESC   &kp BSPC          &trans  &trans     &trans  &trans
         &trans    &trans    &trans         &trans         &trans           &trans    &trans  &trans                             &trans     &trans
             >;
         };
