@@ -47,20 +47,6 @@
     };
 };
 
-/* NUMBER と FUNCTION を同時に有効にすると SYMBOL レイヤーになる
-   (LANG1 長押し + スペース長押し) */
-
-/ {
-    conditional_layers {
-        compatible = "zmk,conditional-layers";
-
-        number_function_to_symbol {
-            if-layers = <NUMBER FUNCTION>;
-            then-layer = <SYMBOL>;
-        };
-    };
-};
-
 /* WINDOW レイヤーの間はポインタを動かさず、キータップだけを出す */
 
 &trackball_listener {
@@ -201,15 +187,6 @@
             bindings = <&kp BSLH>;
             key-positions = <31 30>;
             layers = <ALL_BUT_MOUSE>;
-        };
-
-        // ===== 親指キー =====
-        // Bluetoothレイヤー(6)呼び出し : 右手親指キー2つ同時押し
-        // (MOUSEレイヤーでも押せるよう、これだけは除外しない)
-
-        combo_bt {
-            bindings = <&mo WIRELESS>;
-            key-positions = <44 45>;
         };
     };
 
