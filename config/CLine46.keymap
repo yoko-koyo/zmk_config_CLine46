@@ -120,6 +120,14 @@
             key-positions = <31 32>;
             layers = <ALL_BUT_MOUSE>;
         };
+
+        // WIRELESS レイヤー : 右親指の右端2キー同時押し (押している間)
+
+        combo_wireless {
+            bindings = <&mo WIRELESS>;
+            key-positions = <44 45>;
+            layers = <ALL_BUT_MOUSE>;
+        };
     };
 
     behaviors {
@@ -161,6 +169,18 @@
             quick-tap-ms = <0>;        // 連打からの長押しでタップ側がリピートするのを禁止
             bindings = <&mo>, <&kp>;
         };
+
+        // Layer-Tap (Hold: Layer, Tap: マウスボタン)。判定は lt_k と同じ
+
+        lt_mkp: lt_mkp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_MKP";
+            #binding-cells = <2>;
+            tapping-term-ms = <175>;
+            flavor = "hold-preferred";
+            quick-tap-ms = <0>;
+            bindings = <&mo>, <&mkp>;
+        };
     };
 
     keymap {
@@ -173,7 +193,7 @@
 &hm LALT GRAVE  &kp Q                &kp W         &kp E       &kp R               &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
 &hm LCTRL BSLH  &kp A                &kp S         &kp D       &kp F               &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
 &kp LSHIFT      &kp Z                &kp X         &kp C       &kp V               &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
-                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &lt_k SYMBOL LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mo SCROLL  &mkp MB1
+                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &lt_mkp SYMBOL MB1   &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mo SCROLL  &mkp MB1
             >;
         };
 
@@ -225,9 +245,9 @@
 
         WIRELESS {
             bindings = <
-&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                           &trans          &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans        &trans                                 &trans          &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL                         &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                           &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans
+&trans  &trans        &trans        &trans        &trans        &trans                                 &trans          &trans          &trans        &trans        &trans        &trans
+&trans  &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL                         &bt BT_CLR      &bt BT_CLR_ALL  &trans        &trans        &trans        &trans
         &trans        &trans        &trans        &trans        &trans          &trans    &bootloader  &studio_unlock                  &trans  &trans
             >;
         };
