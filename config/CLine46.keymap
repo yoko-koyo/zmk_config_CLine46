@@ -7,9 +7,9 @@
 
 // レイヤー定義
 
-#define MOUSE 1
-#define NUMBER 2
-#define FUNCTION 3
+#define NUMBER 1
+#define FUNCTION 2
+#define MOUSE 3
 #define SCROLL 4
 #define WIRELESS 5
 
@@ -120,6 +120,22 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
+        // [ : 左手上段 [E] + [R]
+
+        combo_lbkt {
+            bindings = <&kp LBKT>;
+            key-positions = <3 4>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
+        // ] : 右手上段 [U] + [I]
+
+        combo_rbkt {
+            bindings = <&kp RBKT>;
+            key-positions = <7 8>;
+            layers = <ALL_BUT_MOUSE>;
+        };
+
         // WIRELESS レイヤー : 右親指の右端2キー同時押し (押している間)
 
         combo_wireless {
@@ -185,6 +201,22 @@
         compatible = "zmk,keymap";
 
         //0 基本
+        //
+        // 表記: タップ/ホールド   EN=英数(LANG2)  JP=かな(LANG1)
+        //       WL=WIRELESS  SCRL=SCROLL  FN=FUNCTION  NUM=NUMBER
+        //
+        // ,-----------------------------------------.    ,-----------------------------------------.
+        // |`/Alt |  Q   |  W   |  E   |  R   |  T   |    |  Y   |  U   |  I   |  O   |  P   |  -   |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // |\/Ctl |  A   |  S   |  D   |  F   |  G   |    |  H   |  J   |  K   |  L   |  ;   | RET  |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // | Sft  |  Z   |  X   |  C   |  V   |  B   |    |  N   |  M   |  ,   |  .   |  /   |=/Sft |
+        // `------+------+------+------+------+------|    |------+------+------+------+------+------'
+        //        |CAPS/ |      |      | MB1/ | EN/  | Spc/ |    |      | JP/  |      |      |
+        //        |  WL  |  WL  | SCRL | Sft  | Gui  |  FN  |    | BSPC | NUM  | ESC  | DEL  |
+        //        `-----------------------------------------'    `---------------------------'
+        //
+        // コンボ: [ESC]+[DEL] 同時押しで WL
 
         default_layer {
             bindings = <
@@ -195,29 +227,34 @@
             >;
         };
 
-        //1 マウス操作用
-
-        MOUSE {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB2   &mkp MB1  &mo SCROLL  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
-        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans      &trans
-            >;
-        };
-
-        //2 数字・基本記号・矢印キー
+        //1 数字・記号・矢印キー (右親指 LANG1 キーのホールドで有効)
+        //
+        // ,-----------------------------------------.    ,-----------------------------------------.
+        // |      |  1   |  2   |  3   |  4   |  5   |    |  6   |  7   |  8   |  9   |  0   |      |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // |      |  '   |  "   |  [   |  ]   | RET  |    |  ←   |  ↓   |  ↑   |  →   |      |      |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // |      |      |      |      |      |      |    | ESC  | TAB  |      |      |      |      |
+        // `-----------------------------------------'    `-----------------------------------------'
 
         NUMBER {
             bindings = <
 &trans  &kp N1     &kp N2    &kp N3         &kp N4         &kp N5                             &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp GRAVE  &kp BSLH  &kp LBKT       &kp RBKT       &kp RET                            &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &kp SQT    &kp DQT   &kp LBKT       &kp RBKT       &kp RET                            &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
 &trans  &trans     &trans    &trans         &trans         &trans                             &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
         &trans     &trans    &trans         &trans         &trans           &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
-        //3 F1〜F12・テンキー
+        //2 記号・F1〜F12 (スペースキーのホールドで有効)
+        //
+        // ,-----------------------------------------.    ,-----------------------------------------.
+        // |      |  !   |  @   |  #   |  $   |  %   |    |  ^   |  &   |  *   |  (   |  )   |      |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // |      |  F1  |  F2  |  F3  |  F4  |  F5  |    |  F6  |  F7  |  F8  |  F9  | F10  |      |
+        // |------+------+------+------+------+------|    |------+------+------+------+------+------|
+        // |      | F11  | F12  |      |      |      |    |      |      |      |      |      |      |
+        // `-----------------------------------------'    `-----------------------------------------'
 
         FUNCTION {
             bindings = <
@@ -225,6 +262,17 @@
 &trans  &kp F1    &kp F2   &kp F3    &kp F4    &kp F5                     &kp F6     &kp F7    &kp F8     &kp F9    &kp F10   &trans
 &trans  &kp F11   &kp F12  &trans    &trans    &trans                     &trans     &trans    &trans     &trans    &trans    &trans
         &trans    &trans   &trans    &trans    &trans   &trans    &trans  &trans                     &trans  &trans
+            >;
+        };
+
+        //3 マウス操作用
+
+        MOUSE {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB2   &mkp MB1  &mo SCROLL  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans      &trans
             >;
         };
 
