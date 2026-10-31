@@ -92,7 +92,7 @@
 
         combo_word_left {
             bindings = <&kp LA(LEFT)>;
-            key-positions = <15 16>;
+            key-positions = <3 4>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -108,7 +108,7 @@
 
         combo_word_right {
             bindings = <&kp LA(RIGHT)>;
-            key-positions = <20 19>;
+            key-positions = <7 8>;
             layers = <ALL_BUT_MOUSE>;
             timeout-ms = <200>;
         };
@@ -124,6 +124,16 @@
         sqt {
             bindings = <&kp SQT>;
             key-positions = <21 20>;
+        };
+
+        L_SYMBOL {
+            bindings = <&mo 3>;
+            key-positions = <15 16>;
+        };
+
+        R_SYMBOL {
+            bindings = <&mo 3>;
+            key-positions = <19 20>;
         };
     };
 
