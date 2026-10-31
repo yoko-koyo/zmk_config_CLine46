@@ -73,22 +73,7 @@
         compatible = "zmk,combos";
 
         // Alt+← (単語単位で左へ) : 左手上段 [E] + [R]
-
-        combo_word_left {
-            bindings = <&kp LA(LEFT)>;
-            key-positions = <3 4>;
-            layers = <ALL_BUT_MOUSE>;
-        };
-
         // Alt+→ (単語単位で右へ) : 右手上段 [U] + [I]
-
-        combo_word_right {
-            bindings = <&kp LA(RIGHT)>;
-            key-positions = <7 8>;
-            layers = <ALL_BUT_MOUSE>;
-            timeout-ms = <200>;
-        };
-
         // ` : 右手上段 [I] + [O]
 
         combo_grave {
@@ -191,10 +176,10 @@
 
         default_layer {
             bindings = <
-&ltk WLESS GRAVE  &kp Q              &kp W      &kp E       &kp R            &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
-&hm  LALT BSLH    &kp A              &kp S      &kp D       &kp F            &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
-&kp  LSHIFT       &kp Z              &kp X      &kp C       &kp V            &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS    &mo WLESS  &mo SCROLL  &hm LCTRL LANG1  &hm LGUI LANG2  &stl SYMBOL SPACE      &kp BSPC  &ltk NUMBER LANG1                    &mo SCROLL  &mkp MB1
+&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R            &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
+&hm LALT BSLH     &kp A            &kp S      &kp D       &kp F            &kp G                                          &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
+&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V            &kp B                                          &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
+                  &ltk WLESS CAPS  &mo WLESS  &mo SCROLL  &hm LCTRL LANG1  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
