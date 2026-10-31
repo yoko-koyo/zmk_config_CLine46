@@ -11,14 +11,14 @@
 #define NUMBER 2
 #define FUNCTION 3
 #define SCROLL 4
-#define WIRELESS 5
+#define WLESS 5
 #define SYMBOL 6
 
 // MOUSE レイヤーを除くレイヤー一覧。MOUSE レイヤー中のキー(クリック/
 // スクロール切り替え等)と物理位置が被るコンボが誤発火・遅延しないよう、
 // 記号系コンボはこの一覧を layers に指定して MOUSE レイヤーでは無効にする
 
-#define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WIRELESS SYMBOL
+#define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WLESS SYMBOL
 
 // mt (ZMK Studio から割り当てる場合用) の判定設定
 
@@ -72,12 +72,21 @@
     combos {
         compatible = "zmk,combos";
 
-        // () {} : [D] + [F] + [J] + [K]
+        // Alt+← (単語単位で左へ) : 左手上段 [E] + [R]
 
-        combo_if {
-            bindings = <&macro_if>;
-            key-positions = <15 16 19 20>;
+        combo_word_left {
+            bindings = <&kp LA(LEFT)>;
+            key-positions = <3 4>;
             layers = <ALL_BUT_MOUSE>;
+        };
+
+        // Alt+→ (単語単位で右へ) : 右手上段 [U] + [I]
+
+        combo_word_right {
+            bindings = <&kp LA(RIGHT)>;
+            key-positions = <7 8>;
+            layers = <ALL_BUT_MOUSE>;
+            timeout-ms = <200>;
         };
 
         // ` : 右手上段 [I] + [O]
@@ -88,32 +97,36 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // Alt+← (単語単位で左へ) : 右手ホーム段 [J] + [K]
+        // () {} : [D] + [F] + [J] + [K]
 
-        combo_word_left {
-            bindings = <&kp LA(LEFT)>;
-            key-positions = <3 4>;
+        combo_if {
+            bindings = <&macro_if>;
+            key-positions = <15 16 19 20>;
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // / : 右手ホーム段 [H] + [J]
+        // FUNCTION レイヤー (押している間) : 左手ホーム段 [D] + [F]
 
-        combo_slash {
-            bindings = <&kp SLASH>;
-            key-positions = <33 32>;
-            layers = <ALL_BUT_MOUSE>;
+        L_SYMBOL {
+            bindings = <&mo 3>;
+            key-positions = <15 16>;
         };
 
-        // Alt+→ (単語単位で右へ) : 右手ホーム段 [K] + [L]
+        // FUNCTION レイヤー (押している間) : 右手ホーム段 [J] + [K]
 
-        combo_word_right {
-            bindings = <&kp LA(RIGHT)>;
-            key-positions = <7 8>;
-            layers = <ALL_BUT_MOUSE>;
-            timeout-ms = <200>;
+        R_SYMBOL {
+            bindings = <&mo 3>;
+            key-positions = <19 20>;
         };
 
-        // \ : 右手下段 [N] + [M]
+        // ' : 右手ホーム段 [K] + [L]
+
+        sqt {
+            bindings = <&kp SQT>;
+            key-positions = <21 20>;
+        };
+
+        // \ : 右手下段 [M] + [,]
 
         combo_bslh {
             bindings = <&kp BSLH>;
@@ -121,19 +134,12 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        sqt {
-            bindings = <&kp SQT>;
-            key-positions = <21 20>;
-        };
+        // / : 右手下段 [,] + [.]
 
-        L_SYMBOL {
-            bindings = <&mo 3>;
-            key-positions = <15 16>;
-        };
-
-        R_SYMBOL {
-            bindings = <&mo 3>;
-            key-positions = <19 20>;
+        combo_slash {
+            bindings = <&kp SLASH>;
+            key-positions = <33 32>;
+            layers = <ALL_BUT_MOUSE>;
         };
     };
 
@@ -167,9 +173,9 @@
 
         // 一般的なLayer-Tap (Hold: Layer, Tap: Key)
 
-        lt_k: lt_k {
+        ltk: ltk {
             compatible = "zmk,behavior-hold-tap";
-            label = "LT_K";
+            label = "LTK";
             #binding-cells = <2>;
             tapping-term-ms = <175>;
             flavor = "hold-preferred";
@@ -185,10 +191,10 @@
 
         default_layer {
             bindings = <
-&hm LALT GRAVE  &kp Q                &kp W         &kp E       &kp R               &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
-&hm LCTRL BSLH  &kp A                &kp S         &kp D       &kp F               &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
-&kp LSHIFT      &kp Z                &kp X         &kp C       &kp V               &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
-                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &lt_k SYMBOL LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mo SCROLL  &mkp MB1
+&ltk WLESS GRAVE  &kp Q              &kp W      &kp E       &kp R            &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
+&hm  LALT BSLH    &kp A              &kp S      &kp D       &kp F            &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
+&kp  LSHIFT       &kp Z              &kp X      &kp C       &kp V            &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
+                  &ltk WLESS CAPS    &mo WLESS  &mo SCROLL  &hm LCTRL LANG1  &hm LGUI LANG2  &stl SYMBOL SPACE      &kp BSPC  &ltk NUMBER LANG1                    &mo SCROLL  &mkp MB1
             >;
         };
 
@@ -238,7 +244,7 @@
 
         //5 通信・システム設定
 
-        WIRELESS {
+        WLESS {
             bindings = <
 &trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                           &trans          &trans  &trans  &trans  &trans  &trans
 &trans  &trans        &trans        &trans        &trans        &trans                                 &trans          &trans  &trans  &trans  &trans  &trans
