@@ -263,7 +263,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LT_K";
             #binding-cells = <2>;
-            tapping-term-ms = <180>;
+            tapping-term-ms = <175>;
             flavor = "hold-preferred";
             quick-tap-ms = <0>;        // 連打からの長押しでタップ側(RET)がリピートするのを禁止
             bindings = <&mo>, <&kp>;
@@ -276,9 +276,9 @@
         default_layer {
             bindings = <
 &hm LALT TAB   &kp Q         &kp W         &kp E       &kp R                    &kp T                                          &kp Y               &kp U  &kp I      &kp O    &kp P      &kp MINUS
-&hm LCTRL ESC  &kp A         &kp S         &kp D       &kp F                    &kp G                                          &kp H               &kp J  &kp K      &kp L    &kp SEMI   &kp RET
+&hm LCTRL ESC  &kp A         &kp S         &kp D       &kp F                    &kp G                                          &kp H               &kp J  &kp K      &kp L    &kp SEMI   &kp COLON
 &kp LSHIFT     &kp Z         &kp X         &kp C       &kp V                    &kp B                                          &kp N               &kp M  &kp COMMA  &kp DOT  &kp SLASH  &hm RSHIFT EQUAL
-               &lt_k 5 CAPS  &mo WIRELESS  &mo SCROLL  &lt_k FUNCTION LG(SEMI)  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mo 4    &mkp MB1
+               &lt_k 5 CAPS  &mo WIRELESS  &mo SCROLL  &lt_k FUNCTION LANG1     &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &lt_k NUMBER RET                    &mo 4    &mkp MB1
             >;
         };
 
