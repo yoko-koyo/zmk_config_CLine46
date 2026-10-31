@@ -93,6 +93,7 @@
         , <&xiao_d 6 (GPIO_ACTIVE_HIGH)>
         , <&xiao_d 7 (GPIO_ACTIVE_HIGH)>
         ;
+        debounce-press-ms = <1>;
         wakeup-source;
         interrupt-gpios = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
     };
