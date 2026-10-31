@@ -12,13 +12,12 @@
 #define FUNCTION 3
 #define SCROLL 4
 #define WIRELESS 5
-#define SYMBOL 6
 
 // MOUSE レイヤーを除くレイヤー一覧。MOUSE レイヤー中のキー(クリック/
 // スクロール切り替え等)と物理位置が被るコンボが誤発火・遅延しないよう、
 // 記号系コンボはこの一覧を layers に指定して MOUSE レイヤーでは無効にする
 
-#define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WIRELESS SYMBOL
+#define ALL_BUT_MOUSE 0 NUMBER FUNCTION SCROLL WIRELESS
 
 // mt (ZMK Studio から割り当てる場合用) の判定設定
 
@@ -142,7 +141,18 @@
             bindings = <&kp>, <&kp>;
         };
 
-        // スペース / BSPC 用Layer-Tap。通常キーの操作感を優先した設定
+        // Hold: Modifier, Tap: マウスボタン。判定は hm と同じ
+
+        hm_mkp: hm_mkp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM_MKP";
+            #binding-cells = <2>;
+            tapping-term-ms = <180>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&mkp>;
+        };
+
+        // スペース用Layer-Tap。通常キーの操作感を優先した設定
         // tap-preferred     : 他キーを押しても hold に確定しない（速く打ってもスペースが出る）
         // require-prior-idle: 直前150ms以内に打鍵があれば即タップ確定
         // quick-tap         : 素早く2度目を押すと通常のスペース（長押しでリピート）
@@ -181,7 +191,7 @@
 &hm LALT GRAVE  &kp Q                &kp W         &kp E       &kp R               &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
 &hm LCTRL BSLH  &kp A                &kp S         &kp D       &kp F               &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
 &kp LSHIFT      &kp Z                &kp X         &kp C       &kp V               &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
-                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &mkp MB1             &hm LGUI LANG2  &stl FUNCTION SPACE    &stl SYMBOL BSPC  &lt_k NUMBER LANG1                   &kp ESC     &kp DEL
+                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &hm_mkp LSHIFT MB1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                   &kp ESC     &kp DEL
             >;
         };
 
@@ -200,10 +210,10 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1    &kp N2    &kp N3         &kp N4         &kp N5                             &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &trans    &trans    &trans         &RET           &trans                             &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &trans    &trans    &trans         &trans         &trans                             &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
-        &trans    &trans    &trans         &trans         &trans           &trans    &trans  &trans                      &trans     &trans
+&trans  &kp N1     &kp N2    &kp N3         &kp N4         &kp N5                             &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp GRAVE  &kp BSLH  &kp LBKT       &kp RBKT       &kp RET                            &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &trans     &trans    &trans         &trans         &trans                             &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
+        &trans     &trans    &trans         &trans         &trans           &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
@@ -211,10 +221,10 @@
 
         FUNCTION {
             bindings = <
-&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
-&trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
-        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &trans  &trans
+&trans  &kp EXCL  &kp AT   &kp HASH  &kp DLLR  &kp PRCNT                  &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR  &kp RPAR  &trans
+&trans  &kp F1    &kp F2   &kp F3    &kp F4    &kp F5                     &kp F6     &kp F7    &kp F8     &kp F9    &kp F10   &trans
+&trans  &kp F11   &kp F12  &trans    &trans    &trans                     &trans     &trans    &trans     &trans    &trans    &trans
+        &trans    &trans   &trans    &trans    &trans   &trans    &trans  &trans                     &trans  &trans
             >;
         };
 
@@ -222,7 +232,7 @@
 
         SCROLL {
             bindings = <
-&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
+&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans  &trans  &trans                       &trans        &trans  &trans  &trans    &trans  &trans
 &trans  &kp C_BRI_DN  &kp C_BRI_INC  &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
 &trans  &trans        &trans         &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
         &trans        &trans         &trans  &trans  &trans  &trans    &kp LG(W)  &kp LG(LEFT)                  &trans  &trans
@@ -237,17 +247,6 @@
 &trans  &trans        &trans        &trans        &trans        &trans                                 &trans          &trans          &trans        &trans        &trans        &trans
 &trans  &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL                         &bt BT_CLR      &bt BT_CLR_ALL  &trans        &trans        &trans        &trans
         &trans        &trans        &trans        &trans        &trans          &trans    &bootloader  &studio_unlock                  &trans  &trans
-            >;
-        };
-
-        //6 記号 (左親指 LANG1 キーのホールドで有効)
-
-        SYMBOL {
-            bindings = <
-&trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
-&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &macro_brackets                    &kp SQT    &kp DQT    &kp SEMI   &kp COLON  &kp UNDER  &trans
-&trans  &kp SLASH  &kp BSLH   &kp LBRC  &kp RBRC  &macro_parens                      &kp PLUS   &kp QMARK  &kp LT     &kp GT     &kp PIPE   &trans
-        &trans     &trans     &trans    &trans    &trans           &trans    &trans  &trans                           &trans     &trans
             >;
         };
     };
