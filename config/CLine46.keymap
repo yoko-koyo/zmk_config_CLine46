@@ -92,7 +92,7 @@
 
         combo_word_left {
             bindings = <&kp LA(LEFT)>;
-            key-positions = <19 20>;
+            key-positions = <15 16>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -100,7 +100,7 @@
 
         combo_slash {
             bindings = <&kp SLASH>;
-            key-positions = <18 19>;
+            key-positions = <33 32>;
             layers = <ALL_BUT_MOUSE>;
         };
 
@@ -117,8 +117,13 @@
 
         combo_bslh {
             bindings = <&kp BSLH>;
-            key-positions = <30 31>;
+            key-positions = <31 32>;
             layers = <ALL_BUT_MOUSE>;
+        };
+
+        sqt {
+            bindings = <&kp SQT>;
+            key-positions = <21 20>;
         };
     };
 
@@ -170,10 +175,10 @@
 
         default_layer {
             bindings = <
-&hm LALT GRAVE  &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I      &kp O    &kp P      &kp MINUS
-&hm LCTRL BSLH  &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K      &kp L    &kp SEMI   &kp RET
-&kp LSHIFT      &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &kp COMMA  &kp DOT  &kp SLASH  &hm RSHIFT EQUAL
-&lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &lt_k SYMBOL LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1  &mo SCROLL  &mkp MB1
+&hm LALT GRAVE  &kp Q                &kp W         &kp E       &kp R               &kp T                                            &kp Y               &kp U  &kp I      &kp O       &kp P      &kp MINUS
+&hm LCTRL BSLH  &kp A                &kp S         &kp D       &kp F               &kp G                                            &kp H               &kp J  &kp K      &kp L       &kp SEMI   &kp RET
+&kp LSHIFT      &kp Z                &kp X         &kp C       &kp V               &kp B                                            &kp N               &kp M  &kp COMMA  &kp DOT     &kp SLASH  &hm RSHIFT EQUAL
+                &lt_k WIRELESS CAPS  &mo WIRELESS  &mo SCROLL  &lt_k SYMBOL LANG1  &hm LGUI LANG2  &stl FUNCTION SPACE    &kp BSPC  &lt_k NUMBER LANG1                    &mo SCROLL  &mkp MB1
             >;
         };
 
@@ -181,10 +186,10 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans      &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &mkp MB2  &mkp MB1  &mo SCROLL  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans      &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB2  &mkp MB1  &mo SCROLL  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans      &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans      &trans
             >;
         };
 
@@ -192,10 +197,10 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1    &kp N2    &kp N3         &kp N4         &kp N5             &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp LPAR  &kp RPAR  &kp LBKT       &kp RBKT       &macro_brackets    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &trans    &trans    &macro_parens  &macro_braces  &trans             &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &kp N1    &kp N2    &kp N3         &kp N4         &kp N5                             &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp LPAR  &kp RPAR  &kp LBKT       &kp RBKT       &macro_brackets                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &trans    &trans    &macro_parens  &macro_braces  &trans                             &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
+        &trans    &trans    &trans         &trans         &trans           &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
@@ -203,10 +208,10 @@
 
         FUNCTION {
             bindings = <
-&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
-&trans  &trans  &trans  &trans  &kp F11  &kp F12    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
+&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
+&trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
+        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &trans  &trans
             >;
         };
 
@@ -214,10 +219,10 @@
 
         SCROLL {
             bindings = <
-&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp C_BRI_DN  &kp C_BRI_INC  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans         &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &kp LG(W)  &kp LG(LEFT)  &trans  &trans
+&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
+&trans  &kp C_BRI_DN  &kp C_BRI_INC  &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans         &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
+        &trans        &trans         &trans  &trans  &trans  &trans    &kp LG(W)  &kp LG(LEFT)                  &trans  &trans
             >;
         };
 
@@ -225,10 +230,10 @@
 
         WIRELESS {
             bindings = <
-&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans        &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &bootloader  &studio_unlock  &trans  &trans
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                           &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans        &trans        &trans        &trans                                 &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL                         &trans          &trans  &trans  &trans  &trans  &trans
+        &trans        &trans        &trans        &trans        &trans          &trans    &bootloader  &studio_unlock                  &trans  &trans
             >;
         };
 
@@ -236,10 +241,10 @@
 
         SYMBOL {
             bindings = <
-&trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
-&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &macro_brackets    &kp SQT    &kp DQT    &kp SEMI   &kp COLON  &kp UNDER  &trans
-&trans  &kp SLASH  &kp BSLH   &kp LBRC  &kp RBRC  &macro_parens      &kp PLUS   &kp QMARK  &kp LT     &kp GT     &kp PIPE   &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
+&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &macro_brackets                    &kp SQT    &kp DQT    &kp SEMI   &kp COLON  &kp UNDER  &trans
+&trans  &kp SLASH  &kp BSLH   &kp LBRC  &kp RBRC  &macro_parens                      &kp PLUS   &kp QMARK  &kp LT     &kp GT     &kp PIPE   &trans
+        &trans     &trans     &trans    &trans    &trans           &trans    &trans  &trans                           &trans     &trans
             >;
         };
     };
