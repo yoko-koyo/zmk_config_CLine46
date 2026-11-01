@@ -122,18 +122,17 @@
             // <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
             // <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
             //<&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,     //Y軸反転（スクロール方向を反転するため無効化）
-            // 向き・加速は Mac Mouse Fix 側で調整。ファーム側は変換と量の縮小のみ
             <&zip_xy_to_scroll_mapper>,                         //スクロールモードに変更
-            //<&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
+            <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
             //<&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,   //スクロールのY軸反転
-            <&scroll_runtime_input_processor>;                  //縮小(1/16)と縦スクロール固定。設定は下の &scroll_runtime_input_processor
+            <&scroll_runtime_input_processor>;                  //縮小(1/4)と縦スクロール固定。設定は下の &scroll_runtime_input_processor
     };
 };
 /* スクロール用ランタイム入力プロセッサ。DYA Studio から再ビルドなしで変更できる。
    注意: DYA Studio で一度保存すると、以後はここの値より保存値が優先される。 */
 &scroll_runtime_input_processor {
     scale-multiplier = <1>;
-    scale-divisor = <16>;                     // スクロール量を1/16倍（スクロール専用の CPI 設定がないため、ここで感度を下げる）
+    scale-divisor = <4>;                      // スクロール量を1/4倍（スクロール専用の CPI 設定がないため、ここで感度を下げる）
     axis-snap-mode = <AXIS_SNAP_MODE_Y>;      // 縦スクロールに固定し、斜めに転がしたときの横ブレを抑える
     axis-snap-threshold = <100>;              // 横方向の移動がこれ(センサー生値)を超えたら横スクロールも許可
     axis-snap-timeout-ms = <1000>;            // 横方向の蓄積がこの時間で減衰する
