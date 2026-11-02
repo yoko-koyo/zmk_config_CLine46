@@ -20,7 +20,7 @@
     min-factor = <1000>;          // ゆっくり動かした時は等倍(1.0x)
     max-factor = <2500>;         // 速く動かした時は最大2.5倍まで加速
     speed-threshold = <1300>;    // これ未満の速度では等倍(1.0x)
-    speed-max = <1400>;          // これ以上の速度で最大倍率に到達
+    speed-max = <2500>;          // これ以上の速度で最大倍率に到達
     acceleration-exponent = <3>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
 };
 
@@ -125,14 +125,14 @@
             <&zip_xy_to_scroll_mapper>,                         //スクロールモードに変更
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
             //<&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,   //スクロールのY軸反転
-            <&scroll_runtime_input_processor>;                  //縮小(1/4)と縦スクロール固定。設定は下の &scroll_runtime_input_processor
+            <&scroll_runtime_input_processor>;                  //縮小(1/16)と縦スクロール固定。設定は下の &scroll_runtime_input_processor
     };
 };
 /* スクロール用ランタイム入力プロセッサ。DYA Studio から再ビルドなしで変更できる。
    注意: DYA Studio で一度保存すると、以後はここの値より保存値が優先される。 */
 &scroll_runtime_input_processor {
     scale-multiplier = <1>;
-    scale-divisor = <4>;                      // スクロール量を1/4倍（スクロール専用の CPI 設定がないため、ここで感度を下げる）
+    scale-divisor = <16>;                     // スクロール量を1/16倍（スクロール専用の CPI 設定がないため、ここで感度を下げる）
     axis-snap-mode = <AXIS_SNAP_MODE_Y>;      // 縦スクロールに固定し、斜めに転がしたときの横ブレを抑える
     axis-snap-threshold = <100>;              // 横方向の移動がこれ(センサー生値)を超えたら横スクロールも許可
     axis-snap-timeout-ms = <1000>;            // 横方向の蓄積がこの時間で減衰する
