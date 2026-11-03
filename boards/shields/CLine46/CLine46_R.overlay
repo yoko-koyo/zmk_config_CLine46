@@ -24,37 +24,28 @@
     acceleration-exponent = <3>; // 1=線形 / 2=二次関数的 / 3=三次関数的カーブ
 };
 
-/* スクロール専用の加速。xy_to_scroll_mapper の前に置き、センサー生値(REL_X/Y)に掛ける。
-   後段の &scroll_runtime_input_processor (1/8) と合わせて
-   ゆっくり: 0.5x * 1/8 = 1/16 相当 / 速い: 1.5x * 1/8 = 約1/5 相当 */
+/* スクロール。加速・軸固定・慣性をこれ1つで行う。センサー生値(cpi=390)を受け取る。
+   実装: src/input_processor_trackball_scroll.c
+   量の単位は milli-units/count (100 = 10カウントで1段)。 */
 
 / {
-    scroll_accel: scroll_accel {
-        compatible = "zmk,input-processor-acceleration";
+    trackball_scroll: trackball_scroll {
+        compatible = "zmk,input-processor-trackball-scroll";
         #input-processor-cells = <0>;
-        input-type = <INPUT_EV_REL>;
-        track-remainders;            // 端数を蓄積し、ゆっくり転がしても取りこぼさない
-        min-factor = <500>;          // ゆっくり転がした時は0.5倍(細かく送れる)
-        max-factor = <1500>;         // 速く転がした時は最大1.5倍
-        speed-threshold = <600>;     // この速度(counts/sec)から加速開始
-        speed-max = <5000>;          // この速度で最大倍率に到達
-        acceleration-exponent = <2>; // 二次関数的カーブ
-    };
+        invert-x;                    // 横スクロールの向きを反転
 
-    /* スクロールの慣性。ボールから手を離したあとも、離す直前の速さから減速しながら
-       スクロールを続ける。再びボールに触るか、キーを押すと止まる。
-       速度の単位はPCへ送るスクロール単位/秒。実装: src/input_processor_scroll_inertia.c */
-    scroll_inertia: scroll_inertia {
-        compatible = "zmk,input-processor-scroll-inertia";
-        #input-processor-cells = <0>;
-        divisor = <8>;               // 後段の縮小(scale-divisor)と必ず同じ値にする
+        slow-scale = <100>;          // ゆっくり転がした時: 10カウントで1段
+        fast-scale = <200>;          // 速く転がした時: 5カウントで1段
+        half-speed = <2000>;         // この速度(counts/sec)で slow と fast の中間
+        first-step = <500>;          // 動き出し・反転は半段分の移動で最初の1段を出す
+        lock-margin = <6>;           // 縦固定。横がこれ以上はっきり勝ったら横に切り替え
+
         release-ms = <30>;           // 入力がこの時間途切れたら手を離したとみなす
-        min-stroke-ms = <40>;        // これ以上続けて転がした時だけ滑る
-        decay = <900>;               // 12msごとの速度の残存率(千分率)。大きいほど長く滑る
-        gain = <1000>;               // 初速の倍率(千分率)。1000=離す直前と同じ速さ
-        start-velocity = <5>;        // 離す直前の速度がこれ未満なら滑らない(小さい動きでも少し滑るよう低め)
-        max-velocity = <60>;         // 慣性の初速の上限。大きく弾いた時に滑りすぎないように
-        stop-velocity = <1>;         // この速度まで落ちたら終了
+        min-stroke-ms = <40>;        // これ以上続けて転がした時だけ慣性を付ける
+        inertia-tau-ms = <120>;      // 慣性の減速の時定数。滑る距離 ≒ 初速 × この時間
+        start-velocity = <5>;        // 離す直前の速度(段/秒)がこれ未満なら滑らない
+        max-velocity = <60>;         // 慣性の初速の上限(段/秒)
+        stop-velocity = <1>;         // この速度(段/秒)まで落ちたら終了
     };
 };
 
@@ -152,24 +143,6 @@
 
     scroller {
         layers = <3 4>;   // FUNCTION / SCROLL レイヤー
-        input-processors = 
-            // <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
-            // <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-            //<&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,     //Y軸反転（スクロール方向を反転するため無効化）
-            <&scroll_accel>,                                    //スクロール加速(速く転がすほど大きく動く)
-            <&zip_xy_to_scroll_mapper>,                         //スクロールモードに変更
-            <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
-            //<&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,   //スクロールのY軸反転
-            <&scroll_inertia>,                                  //慣性(縮小前の細かい値で速度を測る)
-            <&scroll_runtime_input_processor>;                  //縮小(1/8)と縦スクロール固定。設定は下の &scroll_runtime_input_processor
+        input-processors = <&trackball_scroll>;
     };
-};
-/* スクロール用ランタイム入力プロセッサ。DYA Studio から再ビルドなしで変更できる。
-   注意: DYA Studio で一度保存すると、以後はここの値より保存値が優先される。 */
-&scroll_runtime_input_processor {
-    scale-multiplier = <1>;
-    scale-divisor = <8>;                      // スクロール量を1/8倍（前段の &scroll_accel で 0.5〜1.5倍されるので、実効 1/16〜約1/5）
-    axis-snap-mode = <AXIS_SNAP_MODE_Y>;      // 縦スクロールに固定し、斜めに転がしたときの横ブレを抑える
-    axis-snap-threshold = <100>;              // 横方向の移動がこれ(センサー生値)を超えたら横スクロールも許可
-    axis-snap-timeout-ms = <1000>;            // 横方向の蓄積がこの時間で減衰する
 };

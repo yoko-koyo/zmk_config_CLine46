@@ -7,11 +7,11 @@ config ZMK_INPUT_PROCESSOR_KEY_TAPPER
       移動方向に対応した behavior をタップする input processor を有効にする。
 
 
-config ZMK_INPUT_PROCESSOR_SCROLL_INERTIA
-    bool "Input processor that adds inertia to scrolling"
+config ZMK_INPUT_PROCESSOR_TRACKBALL_SCROLL
+    bool "Trackball scroll input processor"
     default y
     depends on ZMK_POINTING
-    depends on DT_HAS_ZMK_INPUT_PROCESSOR_SCROLL_INERTIA_ENABLED
+    depends on DT_HAS_ZMK_INPUT_PROCESSOR_TRACKBALL_SCROLL_ENABLED
     help
-      スクロールの速度を測り、入力が途切れたあとも減衰させながら
-      スクロールを送り続ける (慣性スクロール) input processor を有効にする。
+      トラックボールの移動をスクロールに変換する (加速・軸固定・慣性つき)
+      input processor を有効にする。

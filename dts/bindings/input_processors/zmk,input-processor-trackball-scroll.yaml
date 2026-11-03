@@ -1,0 +1,85 @@
+# CLine46: トラックボール用スクロール input processor
+
+description: |
+  センサーの生の REL_X / REL_Y をスクロール (REL_WHEEL / REL_HWHEEL) に変換する。
+  加速・軸固定・端数処理・慣性をまとめて行うので、スクロール用 input-processors には
+  これ1つだけを置く (code mapper や縮小は不要)。
+  スクロール量の単位 "unit" は PC へ送るホイールの1段。
+
+compatible: "zmk,input-processor-trackball-scroll"
+
+include: ip_zero_param.yaml
+
+properties:
+  invert-x:
+    type: boolean
+    description: 横スクロールの向きを反転する
+
+  invert-y:
+    type: boolean
+    description: 縦スクロールの向きを反転する
+
+  slow-scale:
+    type: int
+    default: 100
+    description: ゆっくり転がした時のスクロール量 (1カウントあたり milli-units。100 = 10カウントで1段)
+
+  fast-scale:
+    type: int
+    default: 200
+    description: 速く転がした時のスクロール量 (milli-units / count)
+
+  half-speed:
+    type: int
+    default: 1500
+    description: slow-scale と fast-scale のちょうど中間になる速度 (counts/sec)
+
+  first-step:
+    type: int
+    default: 500
+    description: 動き出し・反転時に先に積む量 (milli-units)。500 なら半段分で最初の1段が出る
+
+  lock-margin:
+    type: int
+    default: 6
+    description: 軸を切り替えるのに必要な差 (counts)。大きいほど斜めの動きで軸が変わりにくい
+
+  release-ms:
+    type: int
+    default: 30
+    description: 入力がこの時間途切れたら手を離したとみなす (センサーの報告間隔 12ms より長く)
+
+  window-ms:
+    type: int
+    default: 50
+    description: 離す直前のこの時間の平均速度を慣性の初速にする
+
+  min-stroke-ms:
+    type: int
+    default: 40
+    description: これ以上続けて転がした時だけ慣性を付ける
+
+  tick-ms:
+    type: int
+    default: 12
+    description: 慣性スクロールの送信間隔
+
+  inertia-tau-ms:
+    type: int
+    default: 120
+    description: 慣性の減速の時定数。滑る距離はおおよそ 初速 × この時間。0 に近いほどすぐ止まる
+
+  start-velocity:
+    type: int
+    default: 5
+    description: 離す直前の速度がこれ未満なら慣性を付けない (units/sec)
+
+  max-velocity:
+    type: int
+    default: 60
+    description: 慣性の初速の上限 (units/sec)。0 = 上限なし
+
+  stop-velocity:
+    type: int
+    default: 1
+    description: 速度がこれ未満になったら慣性を終了する (units/sec)
