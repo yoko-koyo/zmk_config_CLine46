@@ -67,6 +67,22 @@
             bindings = <&kp LPAR &kp RPAR &kp SPACE &kp LBRC &kp RBRC>;
             label = "IF";
         };
+
+        /* 英数 (LANG2) に切り替えてから :@: を入力。
+           IME の切り替えが終わる前に記号が入らないよう、英数のあとだけ 50ms 待つ */
+
+        macro_colon_at: macro_colon_at {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings
+                = <&macro_wait_time 50>
+                , <&kp LANG2>
+                , <&macro_wait_time 10>
+                , <&kp COLON &kp AT &kp COLON>
+                ;
+        };
     };
 
     combos {
@@ -97,10 +113,10 @@
             key-positions = <15 16>;
         };
 
-        // 右 Option (押している間) : 右手ホーム段 [J] + [K]
+        // Enter : 右手ホーム段 [J] + [K]
 
-        R_ALT {
-            bindings = <&kp RALT>;
+        R_RET {
+            bindings = <&kp RET>;
             key-positions = <20 19>;
         };
 
@@ -109,6 +125,14 @@
         sqt {
             bindings = <&kp SQT>;
             key-positions = <21 20>;
+        };
+
+        // :@: : 右手ホーム段 [L] + [;]
+
+        combo_colon_at {
+            bindings = <&macro_colon_at>;
+            key-positions = <21 22>;
+            layers = <ALL_BUT_MOUSE>;
         };
 
         // \ : 右手下段 [M] + [,]
@@ -155,7 +179,7 @@
             compatible = "zmk,behavior-hold-tap";               
             label = "SLT";
             #binding-cells = <2>;
-            tapping-term-ms = <170>;
+            tapping-term-ms = <150>;
             require-prior-idle-ms = <140>;
             quick-tap-ms = <145>;
             flavor = "balanced";
@@ -193,18 +217,19 @@
         compatible = "zmk,keymap";
 
         // 各レイヤーの図: 空欄は &trans (下のレイヤー / ベースのキー)。
+        // OS Sft = ワンショット Shift (タップで次の1文字だけ Shift、押し続けると普通の Shift)
         // A/B は「長押し A / タップ B」(例: Cmd/Eisu = 長押し Cmd、タップ 英数)
 
         //0 基本
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  | Alt/`  |   Q    |   W    |   E    |   R    |   T    |                           |   Y    |   U    |   I    |   O    |   P    |   -    |
-        //  +--------+--------+--------+--------+--------+-------+                           +--------+--------+--------+--------+--------+--------+
+        //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  | Ctl/\  |   A    |   S    |   D    |   F    |   G    |                           |   H    |   J    |   K    |   L    |   ;    | Enter  |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  | Shift  |   Z    |   X    |   C    |   V    |   B    |                           |   N    |   M    |   ,    |   .    |   /    | Sft/=  |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
-        //           |WL/Caps | SCROLL |  Alt   |Alt/Esc |Cmd/Eisu| FN/Spc |         |   BS   |NUM/Kana|                  | Opt+<- | Opt+-> |
+        //           |WL/Caps | SCROLL | OS Sft |Alt/Esc |Cmd/Eisu| FN/Spc |         |   BS   |NUM/Kana|                  | Opt+<- | Opt+-> |
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
 
         default_layer {
@@ -212,7 +237,7 @@
 &hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                                  &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
 &hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                                  &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
 &kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                                  &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LALT ESC  &hm LGUI LANG2  &slt FUNCTION SPACE    &kp BSPC        &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+                  &ltk WLESS CAPS  &mo SCROLL &sk LSHIFT  &hm LALT ESC  &hm LGUI LANG2  &slt FUNCTION SPACE    &kp BSPC        &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
@@ -243,7 +268,7 @@
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   !    |   ?    |   [    |   ]    |   '    |                           |  Left  |  Down  |   Up   | Right  |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   \    |  Pipe  |   ()   |   {}   |   "    |                           |  Esc   |  Tab   |        |        |        |        |
+        //  |        |   \    |   |    |   ()   |   {}   |   "    |                           |  Esc   |  Tab   |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
         //           |        |        |        |        |        |        |         |        |        |                  |        |        |
@@ -260,33 +285,33 @@
 
         //3 記号 (現在は入り口なし。戻すときは BSPC を &blt SYMBOL BSPC にする)
         //  上段は US 配列の Shift+数字 の記号 (NUMBER レイヤーの 1〜0 と同じ位置)
-        //  2〜3段目の左手は NUMBER レイヤーとほぼ同じ (2段目の [ ] の位置だけ ( ) )
+        //  2〜3段目の左手は NUMBER レイヤーとほぼ同じ (2段目の [ ] の位置だけ { } )
         //  ベースレイヤーで記号が出る位置は、その記号の Shift 版 (` → ~ / \ → | / - → _ / ; → : / , . / → < > ? / = → +)
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |   ~    |   !    |   @    |   #    |   $    |   %    |                           |   ^    |   &    |   *    |   (    |   )    |   _    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |   |    |   !    |   ?    |   (    |   )    |   '    |                           |  Left  |  Down  |   Up   | Right  |   :    |        |
+        //  |   |    |   !    |   ?    |   {    |   }    |   '    |                           |  Left  |  Down  |   Up   | Right  |   :    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   \    |   |    |   ()   |   {}   |   "    |                           |  Esc   |  Tab   |   <    |   >    |   ?    |   +    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
-        //           |        |        |        |        |        |        |         |        |        |                  |        |        |
+        //           |        |        |        |        |        |        |         |        |        |                  |  Bri-  |  Bri+  |
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
 
         SYMBOL {
             bindings = <
-&kp TILDE  &kp EXCL  &kp AT     &kp HASH       &kp DLLR       &kp PRCNT                    &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR   &kp RPAR   &kp UNDER
-&kp PIPE   &kp EXCL  &kp QMARK  &kp LBRC       &kp RBRC       &kp SQT                      &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT  &kp COLON  &trans
-&trans     &kp BSLH  &kp PIPE   &macro_parens  &macro_braces  &kp DQT                      &kp ESC    &kp TAB   &kp LT     &kp GT     &kp QMARK  &kp PLUS
-        &trans     &trans     &trans    &trans    &trans      &trans    &trans  &trans                           &trans     &trans
+&kp TILDE  &kp EXCL  &kp AT     &kp HASH       &kp DLLR       &kp PRCNT                       &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR      &kp RPAR   &kp UNDER
+&kp PIPE   &kp EXCL  &kp QMARK  &kp LBRC       &kp RBRC       &kp SQT                         &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT     &kp COLON  &trans
+&trans     &kp BSLH  &kp PIPE   &macro_parens  &macro_braces  &kp DQT                         &kp ESC    &kp TAB   &kp LT     &kp GT        &kp QMARK  &kp PLUS
+           &trans    &trans     &trans         &trans        &trans  &trans          &trans  &trans                          &kp C_BRI_DN  &kp C_BRI_INC
             >;
         };
 
-        //4 スクロール操作用・音量/輝度
+        //4 スクロール操作用
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |  Vol-  |  Vol+  |        |        |        |                           |        |        |        |        |        |        |
+        //  |        |        |        |        |        |        |                           |        |        |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |  Bri-  |  Bri+  |        |        |        |                           |        |        |        |        |        |        |
+        //  |        |        |        |        |        |        |                           |        |        |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |        |        |        |        |        |                           |        |        |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
@@ -296,10 +321,10 @@
 
         SCROLL {
             bindings = <
-&trans  &kp C_VOL_DN  &kp C_VOL_UP   &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
-&trans  &kp C_BRI_DN  &kp C_BRI_INC  &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans         &trans  &trans  &trans                       &trans        &trans  &trans  &trans  &trans  &trans
-        &trans        &trans         &trans  &trans  &trans  &trans    &kp LG(W)  &kp LG(LEFT)                  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                       &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                       &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                       &trans  &trans  &trans  &trans  &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans    &kp LG(W)  &kp LG(LEFT)                 &trans  &trans
             >;
         };
 
@@ -324,7 +349,7 @@
             >;
         };
 
-        //6 F1〜F12・テンキー (Space の長押しで有効)
+        //6 F1〜F12・テンキー・音量 (Space の長押しで有効)
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   F1   |   F2   |   F3   |   F4   |   F5   |                           |   /    |   7    |   8    |   9    |   0    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
@@ -333,7 +358,7 @@
         //  |        |        |        |        |  F11   |  F12   |                           |   0    |   1    |   2    |   3    |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
-        //           |        |        |        |        |        |        |         |        |        |                  |        |        |
+        //           |        |        |        |        |        |        |         |        |        |                  |  Vol-  |  Vol+  |
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
 
         FUNCTION {
@@ -341,7 +366,7 @@
 &trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp SLASH  &kp N7  &kp N8  &kp N9  &kp N0  &trans
 &trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp ASTRK  &kp N4  &kp N5  &kp N6  &trans  &trans
 &trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp N0     &kp N1  &kp N2  &kp N3  &trans  &trans
-        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &trans  &trans
+        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &kp C_VOL_DN  &kp C_VOL_UP
             >;
         };
     };
