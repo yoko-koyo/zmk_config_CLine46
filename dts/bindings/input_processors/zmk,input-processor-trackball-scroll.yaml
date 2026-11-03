@@ -74,6 +74,11 @@ properties:
     default: 120
     description: 慣性の減速の時定数。滑る距離はおおよそ 初速 × この時間。0 に近いほどすぐ止まる
 
+  inertia-gain:
+    type: int
+    default: 1000
+    description: 慣性の初速の倍率 (千分率)。離す直前の平均速度に掛ける。1000 = そのまま
+
   start-velocity:
     type: int
     default: 5

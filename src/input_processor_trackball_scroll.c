@@ -69,6 +69,7 @@ struct ts_config {
     int32_t tau_ms;          /* 慣性の減速の時定数 */
     int32_t quick_velocity;  /* units/sec。これ未満の慣性は時間を縮めて素早く滑り終える */
     int32_t start_velocity;  /* units/sec */
+    int32_t gain;            /* 慣性の初速の倍率 (千分率) */
     int32_t max_velocity;    /* units/sec (0 = 上限なし) */
     int32_t stop_velocity;   /* units/sec */
 };
@@ -165,6 +166,36 @@ static void ts_tick_handler(struct k_work *work) {
     }
 }
 
+/* 新しい方から window_ms 以内のレポートで平均速度 (milli-units/sec) を出す。
+ * 最古のレポートは区間の始点として時刻だけ使う。2件未満なら false */
+static bool ts_rate(const struct ts_data *data, uint32_t window_ms, int64_t *out) {
+    int64_t newest = data->last_event;
+    int64_t oldest = newest;
+    int64_t sum = 0;
+    int32_t newer_milli = 0;
+    bool have_newer = false;
+
+    for (int k = 1; k <= data->count; k++) {
+        const struct ts_sample *s = &data->history[(data->head + TS_HISTORY - k) % TS_HISTORY];
+        if (newest - s->time > window_ms) {
+            break;
+        }
+        if (have_newer) {
+            sum += newer_milli;
+        }
+        newer_milli = s->milli;
+        oldest = s->time;
+        have_newer = true;
+    }
+
+    int64_t span = newest - oldest;
+    if (span <= 0) {
+        return false;
+    }
+    *out = sum * 1000 / span;
+    return true;
+}
+
 /* 入力が途切れた: 慣性を始めるか判定する (システムワークキュー) */
 static void ts_release_handler(struct k_work *work) {
     struct k_work_delayable *dwork = k_work_delayable_from_work(work);
@@ -173,37 +204,29 @@ static void ts_release_handler(struct k_work *work) {
     bool start = false;
 
     K_SPINLOCK(&data->lock) {
-        int64_t newest = data->last_event;
-        int64_t oldest = newest;
-        int64_t sum = 0;
-        int32_t newer_milli = 0;
-        bool have_newer = false;
-
-        if (data->count < 3 || newest - data->stroke_start < cfg->min_stroke_ms) {
+        if (data->count < 3 || data->last_event - data->stroke_start < cfg->min_stroke_ms) {
             K_SPINLOCK_BREAK;
         }
 
-        /* 新しい方から window_ms 以内のレポートで平均速度を出す。
-         * 最古のレポートは区間の始点として時刻だけ使う。 */
-        for (int k = 1; k <= data->count; k++) {
-            const struct ts_sample *s = &data->history[(data->head + TS_HISTORY - k) % TS_HISTORY];
-            if (newest - s->time > cfg->window_ms) {
-                break;
-            }
-            if (have_newer) {
-                sum += newer_milli;
-            }
-            newer_milli = s->milli;
-            oldest = s->time;
-            have_newer = true;
-        }
-
-        int64_t span = newest - oldest;
-        if (span <= 0) {
+        /* 離す直前 window_ms の平均速度に倍率をかける (離す直前の減速分を補う) */
+        int64_t v;
+        if (!ts_rate(data, cfg->window_ms, &v)) {
             K_SPINLOCK_BREAK;
         }
+        v = v * cfg->gain / 1000;
 
-        int64_t v = sum * 1000 / span; /* milli-units/sec */
+        /* ただし離す直前 (window_ms の半分) の速度は超えない。
+         * 指でブレーキをかけて止めたとき、止まりかけてから再び加速して
+         * 「もう一度滑る」ように見えるのを防ぐ */
+        int64_t v_end;
+        if (ts_rate(data, cfg->window_ms / 2, &v_end)) {
+            if ((v > 0 && v_end <= 0) || (v < 0 && v_end >= 0)) {
+                K_SPINLOCK_BREAK;
+            }
+            if (llabs(v) > llabs(v_end)) {
+                v = v_end;
+            }
+        }
 
         /* 初速は「離す直前の速度 - start-velocity」。遅い動きほど慣性が控えめになり、
          * しきい値を境に急に滑り出すこともない */
@@ -414,6 +437,7 @@ static int ts_init(const struct device *dev) {
         .tau_ms = DT_INST_PROP(n, inertia_tau_ms),                                                 \
         .quick_velocity = DT_INST_PROP(n, quick_velocity),                                         \
         .start_velocity = DT_INST_PROP(n, start_velocity),                                         \
+        .gain = DT_INST_PROP(n, inertia_gain),                                                     \
         .max_velocity = DT_INST_PROP(n, max_velocity),                                             \
         .stop_velocity = DT_INST_PROP(n, stop_velocity),                                           \
     };                                                                                             \
