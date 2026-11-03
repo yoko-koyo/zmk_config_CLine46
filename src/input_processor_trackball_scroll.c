@@ -62,6 +62,7 @@ struct ts_config {
     int32_t deadzone;        /* counts。動き出し・反転時に捨てる移動量 */
     int32_t lock_margin;     /* counts。軸を切り替えるのに必要な差 */
     uint32_t release_ms;
+    uint32_t min_release_ms; /* 速く動かしている時の「離した」判定の最短時間 */
     uint32_t resume_ms;      /* この時間内の触り直しは前の操作の続きとして扱う */
     uint32_t window_ms;
     uint32_t min_stroke_ms;
@@ -89,6 +90,8 @@ struct ts_data {
     int64_t stroke_start;
     int64_t last_event;
     int64_t last_sync;
+    int32_t report_dt;      /* 直近のセンサーレポートの間隔 (ms) */
+    uint32_t release_delay; /* 「離した」判定までの待ち時間 (ms)。報告間隔に合わせて変える */
     int32_t speed;       /* 平滑化した速度 (counts/sec) */
     int32_t report_peak; /* 現在のレポート内の瞬間速度の最大 */
     int32_t dom[2];      /* 軸ごとの直近の移動量 (軸固定の判定用, 減衰あり) */
@@ -258,7 +261,7 @@ static void ts_release_handler(struct k_work *work) {
 
         /* 手を離したと判定するまで release-ms 待った分、進んでいたはずの量を先に積む。
          * これがないと、離してから慣性が始まるまでスクロールが一瞬止まって見える */
-        int64_t gap = natural * (int64_t)cfg->release_ms / 1000;
+        int64_t gap = natural * (int64_t)data->release_delay / 1000;
         data->acc += (int32_t)(v > 0 ? gap : -gap);
 
         start = true;
@@ -304,6 +307,7 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
     int32_t value = cfg->invert[axis] ? -event->value : event->value;
     int32_t out = 0;
     uint8_t out_axis;
+    uint32_t release_delay = cfg->release_ms;
 
     K_SPINLOCK(&data->lock) {
         was_coasting = data->coasting;
@@ -314,6 +318,7 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
         if (now - data->last_event > cfg->release_ms) {
             data->stroke_start = now;
             data->last_sync = now - 12;
+            data->report_dt = cfg->release_ms;
             data->speed = 0;
             data->report_peak = 0;
             data->pending = 0;
@@ -384,16 +389,24 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
             data->pending = 0;
             data->speed = speed;
             data->report_peak = 0;
+            data->report_dt = (int32_t)CLAMP(now - data->last_sync, 4, 100);
             data->last_sync = now;
             data->dom[AXIS_X] = data->dom[AXIS_X] * 3 / 4;
             data->dom[AXIS_Y] = data->dom[AXIS_Y] * 3 / 4;
         }
+
+        /* 「離した」判定までの待ち時間: 直近の報告間隔の2倍 (min-release-ms 〜 release-ms)。
+         * 速く動かしている時は報告が途切れずに来るので早く判定でき、
+         * 離してから慣性が始まるまでの「止まりかけ」が短くなる */
+        data->release_delay =
+            CLAMP((uint32_t)(2 * data->report_dt), cfg->min_release_ms, cfg->release_ms);
+        release_delay = data->release_delay;
     }
 
     if (was_coasting) {
         k_work_cancel_delayable(&data->tick_work);
     }
-    k_work_reschedule(&data->release_work, K_MSEC(cfg->release_ms));
+    k_work_reschedule(&data->release_work, K_MSEC(release_delay));
 
     /* イベントをスクロールに書き換える (X/Y どちらのイベントでも固定軸の量を運ぶ) */
     event->code = out_axis == AXIS_X ? INPUT_REL_HWHEEL : INPUT_REL_WHEEL;
@@ -430,6 +443,7 @@ static int ts_init(const struct device *dev) {
         .deadzone = DT_INST_PROP(n, deadzone),                                                     \
         .lock_margin = DT_INST_PROP(n, lock_margin),                                               \
         .release_ms = DT_INST_PROP(n, release_ms),                                                 \
+        .min_release_ms = DT_INST_PROP(n, min_release_ms),                                         \
         .resume_ms = DT_INST_PROP(n, resume_ms),                                                   \
         .window_ms = DT_INST_PROP(n, window_ms),                                                   \
         .min_stroke_ms = DT_INST_PROP(n, min_stroke_ms),                                           \

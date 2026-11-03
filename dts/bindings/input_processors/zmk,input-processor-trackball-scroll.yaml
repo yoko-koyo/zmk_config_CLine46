@@ -47,7 +47,12 @@ properties:
   release-ms:
     type: int
     default: 30
-    description: 入力がこの時間途切れたら手を離したとみなす (センサーの報告間隔 12ms より長く)
+    description: 「離した」判定の最長時間 (ゆっくり動かして報告間隔が空く時用。センサーの報告間隔 12ms より長く)
+
+  min-release-ms:
+    type: int
+    default: 16
+    description: 速く動かしている時の「離した」判定の最短時間。判定は直近の報告間隔の2倍 (この値〜release-ms)
 
   resume-ms:
     type: int
