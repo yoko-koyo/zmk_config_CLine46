@@ -94,14 +94,14 @@
 
         L_SYMBOL {
             bindings = <&mo 3>;
-            key-positions = <15 16>;
+            key-positions = <15 14>;
         };
 
         // FUNCTION レイヤー (押している間) : 右手ホーム段 [J] + [K]
 
         R_SYMBOL {
             bindings = <&mo 3>;
-            key-positions = <19 20>;
+            key-positions = <20 21>;
         };
 
         // ' : 右手ホーム段 [K] + [L]
@@ -125,6 +125,11 @@
             bindings = <&kp SLASH>;
             key-positions = <33 32>;
             layers = <ALL_BUT_MOUSE>;
+        };
+
+        lang1 {
+            bindings = <&kp LANG1>;
+            key-positions = <19 20>;
         };
     };
 
@@ -176,10 +181,10 @@
 
         default_layer {
             bindings = <
-&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R            &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
-&hm LALT BSLH     &kp A            &kp S      &kp D       &kp F            &kp G                                          &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
-&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V            &kp B                                          &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo WLESS  &mo SCROLL  &hm LCTRL LANG1  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R          &kp T                                          &kp Y            &kp U  &kp I      &kp O         &kp P          &kp MINUS
+&hm LALT BSLH     &kp A            &kp S      &kp D       &kp F          &kp G                                          &kp H            &kp J  &kp K      &kp L         &kp SEMI       &kp SQT
+&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V          &kp B                                          &kp N            &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
+                  &ltk WLESS CAPS  &mo WLESS  &mo SCROLL  &hm LCTRL ESC  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &ltk NUMBER RET                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
@@ -244,7 +249,7 @@
             bindings = <
 &trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
 &trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &macro_brackets                    &kp SQT    &kp DQT    &kp SEMI   &kp COLON  &kp UNDER  &trans
-&trans  &kp SLASH  &kp BSLH   &kp LBRC  &kp RBRC  &macro_parens                      &kp PLUS   &kp QMARK  &kp LT     &kp GT     &kp PIPE   &trans
+&trans  &kp BSLH   &kp SLASH  &kp LBRC  &kp RBRC  &macro_parens                      &kp PLUS   &kp QMARK  &kp LT     &kp BSLH   &kp PIPE   &trans
         &trans     &trans     &trans    &trans    &trans           &trans    &trans  &trans                           &trans     &trans
             >;
         };
