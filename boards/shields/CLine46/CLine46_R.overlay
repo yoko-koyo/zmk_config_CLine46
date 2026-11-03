@@ -142,7 +142,7 @@
 
 
     scroller {
-        layers = <6 4>;   // FUNCTION / SCROLL レイヤー (keymap の #define FUNCTION / SCROLL と合わせる)
+        layers = <3 4>;   // FUNCTION / SCROLL レイヤー (keymap の #define FUNCTION / SCROLL と合わせる)
         input-processors = <&trackball_scroll>;
     };
 };

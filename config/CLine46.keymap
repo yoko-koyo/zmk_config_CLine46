@@ -9,10 +9,10 @@
 
 #define MOUSE 1
 #define NUMBER 2
-#define SYMBOL 3
+#define FUNCTION 3
 #define SCROLL 4
 #define WLESS 5
-#define FUNCTION 6
+#define SYMBOL 6
 
 // MOUSE レイヤーを除くレイヤー一覧。MOUSE レイヤー中のキー(クリック/
 // スクロール切り替え等)と物理位置が被るコンボが誤発火・遅延しないよう、
@@ -158,16 +158,16 @@
         };
     };
 
-    // NUMBER と SYMBOL を同時に押している間は FUNCTION レイヤー。
-    // then-layer は if-layers より上 (番号が大きい) にないと SYMBOL 側のキーが優先されるため、
-    // FUNCTION を最後のレイヤーにしている
+    // NUMBER と FUNCTION を同時に押している間は SYMBOL レイヤー。
+    // then-layer は if-layers より上 (番号が大きい) にないと FUNCTION 側のキーが優先されるため、
+    // SYMBOL を最後のレイヤーにしている
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
         tri_layer {
-            if-layers = <NUMBER SYMBOL>;
-            then-layer = <FUNCTION>;
+            if-layers = <NUMBER FUNCTION>;
+            then-layer = <SYMBOL>;
         };
     };
 
@@ -178,10 +178,10 @@
 
         default_layer {
             bindings = <
-&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R         &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
+&hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
 &hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                          &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
 &kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                          &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LGUI ESC  &ltk SYMBOL LANG2  &kp SPACE         &kp BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LGUI ESC  &ltk FUNCTION LANG2  &kp SPACE       &kp BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
@@ -207,15 +207,14 @@
             >;
         };
 
-        //3 記号 (左親指 [位置40] の長押しで有効。タップは英数)
-        //  上段は US 配列の Shift+数字 と同じ並び (NUMBER レイヤーの 1〜0 と同じ位置)
+        //3 F1〜F12・テンキー (左親指 [位置40] の長押しで有効。タップは英数)
 
-        SYMBOL {
+        FUNCTION {
             bindings = <
-&trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
-&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &kp SQT                            &kp MINUS  &kp EQUAL  &kp SEMI   &kp COLON  &kp DQT    &trans
-&trans  &kp BSLH   &kp PIPE   &kp LBRC  &kp RBRC  &kp UNDER                          &kp PLUS   &kp SLASH  &kp QMARK  &kp LT     &kp GT     &trans
-        &trans     &trans     &trans    &trans    &trans           &trans    &trans  &trans                           &trans     &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
+&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
+&trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
+        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &trans  &trans
             >;
         };
 
@@ -241,14 +240,15 @@
             >;
         };
 
-        //6 F1〜F12・テンキー (NUMBER と SYMBOL を同時に押している間。conditional_layers)
+        //6 記号 (NUMBER と FUNCTION を同時に押している間。conditional_layers)
+        //  上段は US 配列の Shift+数字 と同じ並び (NUMBER レイヤーの 1〜0 と同じ位置)
 
-        FUNCTION {
+        SYMBOL {
             bindings = <
-&trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp SLASH  &kp N4  &kp N5  &kp N6  &trans  &trans
-&trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp UNDER  &kp N1  &kp N2  &kp N3  &trans  &trans
-        &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &trans  &trans
+&trans  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                          &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &trans
+&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &kp SQT                            &kp MINUS  &kp EQUAL  &kp SEMI   &kp COLON  &kp DQT    &trans
+&trans  &kp BSLH   &kp PIPE   &kp LBRC  &kp RBRC  &kp UNDER                          &kp PLUS   &kp SLASH  &kp QMARK  &kp LT     &kp GT     &trans
+        &trans     &trans     &trans    &trans    &trans           &trans    &trans  &trans                           &trans     &trans
             >;
         };
     };
