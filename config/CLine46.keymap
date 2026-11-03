@@ -106,10 +106,10 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // 左 Option (押している間) : 左手ホーム段 [D] + [F]
+        // Delete (前方削除) : 左手ホーム段 [D] + [F]
 
-        L_ALT {
-            bindings = <&kp LALT>;
+        L_DEL {
+            bindings = <&kp DEL>;
             key-positions = <15 16>;
         };
 
@@ -353,7 +353,7 @@
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   F1   |   F2   |   F3   |   F4   |   F5   |                           |   /    |   7    |   8    |   9    |   0    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   F6   |   F7   |   F8   |   F9   |  F10   |                           |   *    |   4    |   5    |   6    |        |        |
+        //  |        |   F6   |   F7   |   F8   |   F9   |  F10   |                           |   .    |   4    |   5    |   6    |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |        |        |        |  F11   |  F12   |                           |   0    |   1    |   2    |   3    |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
@@ -364,7 +364,7 @@
         FUNCTION {
             bindings = <
 &trans  &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp SLASH  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp ASTRK  &kp N4  &kp N5  &kp N6  &trans  &trans
+&trans  &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp DOT    &kp N4  &kp N5  &kp N6  &trans  &trans
 &trans  &trans  &trans  &trans  &kp F11  &kp F12                    &kp N0     &kp N1  &kp N2  &kp N3  &trans  &trans
         &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                     &kp C_VOL_DN  &kp C_VOL_UP
             >;
