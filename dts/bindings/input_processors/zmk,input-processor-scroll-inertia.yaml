@@ -1,0 +1,63 @@
+# CLine46: スクロールに慣性をつける input processor
+
+description: |
+  スクロールイベント (REL_WHEEL / REL_HWHEEL) を記録して離す直前の速度を測り、
+  入力が途切れたらその速度から減衰させながらスクロールを送り続ける。
+  スクロール用 input-processors の中で、スクロールへの変換・反転の後、
+  縮小 (scroll_runtime_input_processor) の前に置く。
+  速度のしきい値は PC へ送るスクロール単位/秒。
+
+compatible: "zmk,input-processor-scroll-inertia"
+
+include: ip_zero_param.yaml
+
+properties:
+  divisor:
+    type: int
+    required: true
+    description: 入力値を送信値に変換する割り算。後段の縮小 (scale-divisor) と同じ値にする
+
+  release-ms:
+    type: int
+    default: 30
+    description: 入力がこの時間途切れたら手を離したとみなし慣性を開始する (センサーの報告間隔 12ms より長く)
+
+  window-ms:
+    type: int
+    default: 50
+    description: 離す直前のこの時間の平均速度を慣性の初速にする
+
+  min-stroke-ms:
+    type: int
+    default: 80
+    description: これ以上続けて転がした時だけ慣性を付ける
+
+  tick-ms:
+    type: int
+    default: 12
+    description: 慣性スクロールの送信間隔
+
+  decay:
+    type: int
+    default: 900
+    description: tick ごとの速度の残存率 (千分率)。大きいほど長く滑る
+
+  gain:
+    type: int
+    default: 1000
+    description: 慣性開始時の速度倍率 (千分率)。1000 で離す直前と同じ速さから減速する
+
+  start-velocity:
+    type: int
+    default: 20
+    description: 離した瞬間の速度がこれ未満なら慣性を付けない (送信単位/秒)
+
+  max-velocity:
+    type: int
+    default: 0
+    description: 慣性の初速の上限 (送信単位/秒)。大きく弾いた時に滑りすぎるのを抑える。0 = 上限なし
+
+  stop-velocity:
+    type: int
+    default: 3
+    description: 速度がこれ未満になったら慣性を終了する (送信単位/秒)
