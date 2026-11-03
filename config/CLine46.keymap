@@ -145,6 +145,22 @@
             bindings = <&kp>, <&kp>;
         };
 
+        // 親指キー用 Shift Mod-Tap (Hold: Shift, Tap: Key)。Space / BSPC に使う
+        // balanced   : 押したまま他キーを押して離し終えた時に Shift に確定。
+        //              先に離すロール打ちは通常のタップ (スペース+文字) になる
+        // quick-tap  : 素早く2度目を押すと通常のタップ (長押しで BSPC / スペースのリピート)
+        // require-prior-idle は使わない (文章の途中で Shift を使えなくなるため)
+
+        smt: smt {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SMT";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+
         // 一般的なLayer-Tap (Hold: Layer, Tap: Key)
 
         ltk: ltk {
@@ -178,10 +194,10 @@
 
         default_layer {
             bindings = <
-&hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
-&hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                          &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
-&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                          &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LGUI ESC  &ltk FUNCTION LANG2  &kp SPACE       &kp BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+&hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                              &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
+&hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                              &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
+&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                              &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
+                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LGUI ESC  &ltk FUNCTION LANG2  &smt LSHIFT SPACE      &smt RSHIFT BSPC  &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
