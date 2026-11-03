@@ -241,9 +241,9 @@
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   1    |   2    |   3    |   4    |   5    |                           |   6    |   7    |   8    |   9    |   0    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   `    |   ~    |   [    |   ]    |   '    |                           |  Left  |  Down  |   Up   | Right  |        |        |
+        //  |        |   ()   |   {}   |   [    |   ]    |   '    |                           |  Left  |  Down  |   Up   | Right  |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   \    |  Pipe  |   {    |   }    |   _    |                           |  Esc   |  Tab   |        |        |        |        |
+        //  |        |   \    |  Pipe  |   {    |   }    |   "    |                           |  Esc   |  Tab   |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
         //           |        |        |        |        |        |        |         |        |        |                  |        |        |
@@ -251,23 +251,23 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1     &kp N2     &kp N3    &kp N4    &kp N5                        &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &kp GRAVE  &kp TILDE  &kp LBKT  &kp RBKT  &kp SQT                       &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &kp BSLH   &kp PIPE   &kp LBRC  &kp RBRC  &kp UNDER                     &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
+&trans  &kp N1         &kp N2         &kp N3    &kp N4    &kp N5                     &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &macro_parens  &macro_braces  &kp LBKT  &kp RBKT  &kp SQT                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &kp BSLH       &kp PIPE       &kp LBRC  &kp RBRC  &kp DQT                    &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
         &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
         //3 記号 (BSPC [位置42] の長押しで有効)
         //  上段は US 配列の Shift+数字 の記号 (NUMBER レイヤーの 1〜0 と同じ位置)
-        //  2〜3段目の左手は NUMBER レイヤーと同じ記号
+        //  2〜3段目の左手は NUMBER レイヤーとほぼ同じ (2段目の [ ] の位置だけ ( ) )
         //  ベースレイヤーで記号が出る位置は、その記号の Shift 版 (` → ~ / \ → | / - → _ / ; → : / , . / → < > ? / = → +)
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |   ~    |   !    |   @    |   #    |   $    |   %    |                           |   ^    |   &    |   *    |   (    |   )    |   _    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |   |    |   ()   |   {}   |   (    |   )    |   '    |                           |  Left  |  Down  |   Up   | Right  |   :    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   \    |   |    |   {    |   }    |   _    |                           |  Esc   |  Tab   |   <    |   >    |   ?    |   +    |
+        //  |        |   \    |   |    |   {    |   }    |   "    |                           |  Esc   |  Tab   |   <    |   >    |   ?    |   +    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
         //           |        |        |        |        |        |        |         |        |        |                  |        |        |
@@ -275,9 +275,9 @@
 
         SYMBOL {
             bindings = <
-&kp TILDE  &kp EXCL   &kp AT     &kp HASH  &kp DLLR  &kp PRCNT                     &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR   &kp UNDER
-&kp PIPE   &macro_parens  &macro_braces  &kp LPAR  &kp RPAR  &kp SQT                       &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &kp COLON  &trans
-&trans     &kp BSLH   &kp PIPE   &kp LBRC  &kp RBRC  &kp UNDER                     &kp ESC    &kp TAB    &kp LT     &kp GT     &kp QMARK  &kp PLUS
+&kp TILDE  &kp EXCL       &kp AT         &kp HASH  &kp DLLR  &kp PRCNT                    &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR   &kp RPAR   &kp UNDER
+&kp PIPE   &macro_parens  &macro_braces  &kp LPAR  &kp RPAR  &kp SQT                      &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT  &kp COLON  &trans
+&trans     &kp BSLH       &kp PIPE       &kp LBRC  &kp RBRC  &kp DQT                      &kp ESC    &kp TAB   &kp LT     &kp GT     &kp QMARK  &kp PLUS
         &trans     &trans     &trans    &trans    &trans      &trans    &trans  &trans                           &trans     &trans
             >;
         };
