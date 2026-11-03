@@ -21,7 +21,7 @@ properties:
 
   slow-scale:
     type: int
-    default: 100
+    default: 150
     description: ゆっくり転がした時のスクロール量 (1カウントあたり milli-units。100 = 10カウントで1段)
 
   fast-scale:
@@ -34,10 +34,10 @@ properties:
     default: 1500
     description: slow-scale と fast-scale のちょうど中間になる速度 (counts/sec)
 
-  first-step:
+  deadzone:
     type: int
-    default: 500
-    description: 動き出し・反転時に先に積む量 (milli-units)。500 なら半段分で最初の1段が出る
+    default: 4
+    description: 動き出し・反転時に捨てる移動量 (counts)。軽く触れた時の揺れでスクロールしないようにする
 
   lock-margin:
     type: int

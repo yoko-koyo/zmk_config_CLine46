@@ -11,8 +11,10 @@
  *
  * 端数処理
  *   スクロールは1段単位でしか送れないため、milli-units で蓄積して1段ごとに送る。
- *   動き出し・反転・軸切り替えの直後は first-step (既定 半段) を先に積んでおき、
- *   小さな動きでもすぐ最初の1段が出るようにする。
+ *
+ * 不感帯
+ *   動き出し・反転・軸切り替えの直後は deadzone カウント分の移動を捨てる。
+ *   ボールに軽く触れた時や指を離す時の揺れでスクロールしないようにする。
  *
  * 軸固定
  *   既定は縦。横の動きが縦の2倍以上かつ lock-margin 以上勝った時だけ横に切り替え、
@@ -57,7 +59,7 @@ struct ts_config {
     int32_t slow_scale;      /* milli-units / count (遅い時) */
     int32_t fast_scale;      /* milli-units / count (速い時) */
     int32_t half_speed;      /* counts/sec。slow と fast の中間になる速度 */
-    int32_t first_step;      /* milli-units。動き出し・反転時に先に積む量 */
+    int32_t deadzone;        /* counts。動き出し・反転時に捨てる移動量 */
     int32_t lock_margin;     /* counts。軸を切り替えるのに必要な差 */
     uint32_t release_ms;
     uint32_t window_ms;
@@ -88,7 +90,8 @@ struct ts_data {
     int32_t report_peak; /* 現在のレポート内の瞬間速度の最大 */
     int32_t dom[2];      /* 軸ごとの直近の移動量 (軸固定の判定用, 減衰あり) */
     uint8_t axis;        /* 固定中の軸 */
-    bool fresh;          /* 次の移動で first-step を積むか */
+    bool fresh;          /* 次の移動で不感帯をやり直すか */
+    int32_t dz_left;     /* 不感帯の残り (counts) */
     int8_t dir;          /* 直近の移動方向 (+1 / -1) */
     int32_t acc;         /* 送信待ちの端数 (milli-units)。慣性にも引き継ぐ */
 
@@ -288,13 +291,21 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
         /* 固定中の軸の移動だけをスクロール量に積む */
         if (axis == data->axis && value != 0) {
             int8_t dir = value > 0 ? 1 : -1;
-            int32_t add = value * ts_scale(cfg, speed);
+            int32_t mag = abs(value);
 
             if (data->fresh || dir != data->dir) {
-                data->acc = dir * cfg->first_step;
+                data->acc = 0;
+                data->dz_left = cfg->deadzone;
                 data->fresh = false;
             }
             data->dir = dir;
+
+            /* 不感帯を消化してから積む */
+            int32_t eaten = MIN(mag, data->dz_left);
+            data->dz_left -= eaten;
+            mag -= eaten;
+
+            int32_t add = dir * mag * ts_scale(cfg, speed);
             data->acc += add;
             data->pending += add;
         }
@@ -362,7 +373,7 @@ static int ts_init(const struct device *dev) {
         .slow_scale = DT_INST_PROP(n, slow_scale),                                                 \
         .fast_scale = DT_INST_PROP(n, fast_scale),                                                 \
         .half_speed = DT_INST_PROP(n, half_speed),                                                 \
-        .first_step = DT_INST_PROP(n, first_step),                                                 \
+        .deadzone = DT_INST_PROP(n, deadzone),                                                     \
         .lock_margin = DT_INST_PROP(n, lock_margin),                                               \
         .release_ms = DT_INST_PROP(n, release_ms),                                                 \
         .window_ms = DT_INST_PROP(n, window_ms),                                                   \
