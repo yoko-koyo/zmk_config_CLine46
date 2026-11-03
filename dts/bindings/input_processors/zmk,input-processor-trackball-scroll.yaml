@@ -49,6 +49,11 @@ properties:
     default: 30
     description: 入力がこの時間途切れたら手を離したとみなす (センサーの報告間隔 12ms より長く)
 
+  resume-ms:
+    type: int
+    default: 500
+    description: 前の操作からこの時間内に同じ向きへ触り直したら続きとして扱う (端数を引き継ぎ、不感帯をかけない)
+
   window-ms:
     type: int
     default: 50
@@ -72,7 +77,12 @@ properties:
   start-velocity:
     type: int
     default: 5
-    description: 離す直前の速度がこれ未満なら慣性を付けない (units/sec)
+    description: 慣性の初速は「離す直前の速度 - これ」(units/sec)。遅い動きほど控えめに滑り、これ未満なら滑らない
+
+  quick-velocity:
+    type: int
+    default: 30
+    description: 初速がこれ (units/sec) 未満の慣性は、滑る距離を保ったまま時間を縮めて素早く滑り終える (小さい慣性の遅れをなくす)。0 で無効
 
   max-velocity:
     type: int

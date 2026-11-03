@@ -62,10 +62,12 @@ struct ts_config {
     int32_t deadzone;        /* counts。動き出し・反転時に捨てる移動量 */
     int32_t lock_margin;     /* counts。軸を切り替えるのに必要な差 */
     uint32_t release_ms;
+    uint32_t resume_ms;      /* この時間内の触り直しは前の操作の続きとして扱う */
     uint32_t window_ms;
     uint32_t min_stroke_ms;
     uint32_t tick_ms;
-    int32_t decay;           /* tick ごとの速度の残存率 (千分率)。tau から算出 */
+    int32_t tau_ms;          /* 慣性の減速の時定数 */
+    int32_t quick_velocity;  /* units/sec。これ未満の慣性は時間を縮めて素早く滑り終える */
     int32_t start_velocity;  /* units/sec */
     int32_t max_velocity;    /* units/sec (0 = 上限なし) */
     int32_t stop_velocity;   /* units/sec */
@@ -103,6 +105,7 @@ struct ts_data {
     /* 慣性 */
     bool coasting;
     int32_t velocity; /* milli-units/sec */
+    int32_t decay;    /* tick ごとの速度の残存率 (千分率)。慣性の開始ごとに決める */
 };
 
 static int32_t ts_scale(const struct ts_config *cfg, int32_t speed) {
@@ -149,7 +152,7 @@ static void ts_tick_handler(struct k_work *work) {
         data->acc += (int32_t)((int64_t)data->velocity * cfg->tick_ms / 1000);
         out = data->acc / 1000;
         data->acc -= out * 1000;
-        data->velocity = (int32_t)((int64_t)data->velocity * cfg->decay / 1000);
+        data->velocity = (int32_t)((int64_t)data->velocity * data->decay / 1000);
         keep = abs(data->velocity) >= cfg->stop_velocity * 1000;
         data->coasting = keep;
     }
@@ -201,16 +204,42 @@ static void ts_release_handler(struct k_work *work) {
         }
 
         int64_t v = sum * 1000 / span; /* milli-units/sec */
-        if (cfg->max_velocity > 0) {
-            v = CLAMP(v, -(int64_t)cfg->max_velocity * 1000, (int64_t)cfg->max_velocity * 1000);
+
+        /* 初速は「離す直前の速度 - start-velocity」。遅い動きほど慣性が控えめになり、
+         * しきい値を境に急に滑り出すこともない */
+        int64_t mag = llabs(v) - (int64_t)cfg->start_velocity * 1000;
+        if (mag <= 0) {
+            K_SPINLOCK_BREAK;
         }
+        if (cfg->max_velocity > 0) {
+            mag = MIN(mag, (int64_t)cfg->max_velocity * 1000);
+        }
+        /* 小さい慣性は、滑る距離 (≒ 初速 × tau) を保ったまま時間を縮める。
+         * 初速が小さいと1段たまるまで時間がかかり、遅れて動くように感じるため */
+        int64_t natural = mag; /* 時間を縮める前の初速 */
+        int64_t tau = cfg->tau_ms;
+        int64_t quick = (int64_t)cfg->quick_velocity * 1000;
+        if (quick > 0 && mag < quick) {
+            int64_t k = quick * 1000 / mag; /* 時間の縮小率 (千分率で何倍か) */
+            tau = MAX(tau * 1000 / k, 2 * (int64_t)cfg->tick_ms);
+            mag = mag * cfg->tau_ms / tau;
+        }
+        data->decay = (int32_t)MAX(0, 1000 - 1000 * (int64_t)cfg->tick_ms / tau);
+        v = v > 0 ? mag : -mag;
+
         /* 反対向きの端数が残っていると慣性の出だしが遅れるので捨てる */
         if ((v > 0 && data->acc < 0) || (v < 0 && data->acc > 0)) {
             data->acc = 0;
         }
         data->velocity = (int32_t)v;
-        start = llabs(v) >= (int64_t)cfg->start_velocity * 1000;
-        data->coasting = start;
+
+        /* 手を離したと判定するまで release-ms 待った分、進んでいたはずの量を先に積む。
+         * これがないと、離してから慣性が始まるまでスクロールが一瞬止まって見える */
+        int64_t gap = natural * (int64_t)cfg->release_ms / 1000;
+        data->acc += (int32_t)(v > 0 ? gap : -gap);
+
+        start = true;
+        data->coasting = true;
     }
 
     if (start) {
@@ -264,13 +293,19 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
             data->last_sync = now - 12;
             data->speed = 0;
             data->report_peak = 0;
-            data->dom[AXIS_X] = data->dom[AXIS_Y] = 0;
-            data->axis = AXIS_Y;
-            data->fresh = true;
-            data->acc = 0;
             data->pending = 0;
             data->count = 0;
             data->head = 0;
+
+            /* resume-ms 以内の触り直しは小刻みな操作の続きとみなし、端数・軸・不感帯の
+             * 状態を引き継ぐ (同じ向きなら不感帯なしで続きから積み上がる。
+             * 反対向きなら下の反転処理で不感帯がかかる) */
+            if (now - data->last_event > cfg->resume_ms) {
+                data->dom[AXIS_X] = data->dom[AXIS_Y] = 0;
+                data->axis = AXIS_Y;
+                data->fresh = true;
+                data->acc = 0;
+            }
         }
         data->last_event = now;
 
@@ -360,10 +395,6 @@ static int ts_init(const struct device *dev) {
     return 0;
 }
 
-/* 時定数 tau の指数減衰を tick ごとの残存率 (千分率) に近似: 1 - tick/tau */
-#define TS_DECAY(n)                                                                                \
-    MAX(0, 1000 - (1000 * DT_INST_PROP(n, tick_ms)) / DT_INST_PROP(n, inertia_tau_ms))
-
 #define TS_INST(n)                                                                                 \
     BUILD_ASSERT(DT_INST_PROP(n, inertia_tau_ms) > DT_INST_PROP(n, tick_ms),                       \
                  "inertia-tau-ms must be longer than tick-ms");                                    \
@@ -376,10 +407,12 @@ static int ts_init(const struct device *dev) {
         .deadzone = DT_INST_PROP(n, deadzone),                                                     \
         .lock_margin = DT_INST_PROP(n, lock_margin),                                               \
         .release_ms = DT_INST_PROP(n, release_ms),                                                 \
+        .resume_ms = DT_INST_PROP(n, resume_ms),                                                   \
         .window_ms = DT_INST_PROP(n, window_ms),                                                   \
         .min_stroke_ms = DT_INST_PROP(n, min_stroke_ms),                                           \
         .tick_ms = DT_INST_PROP(n, tick_ms),                                                       \
-        .decay = TS_DECAY(n),                                                                      \
+        .tau_ms = DT_INST_PROP(n, inertia_tau_ms),                                                 \
+        .quick_velocity = DT_INST_PROP(n, quick_velocity),                                         \
         .start_velocity = DT_INST_PROP(n, start_velocity),                                         \
         .max_velocity = DT_INST_PROP(n, max_velocity),                                             \
         .stop_velocity = DT_INST_PROP(n, stop_velocity),                                           \
