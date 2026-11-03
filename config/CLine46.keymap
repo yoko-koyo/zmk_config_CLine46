@@ -94,14 +94,14 @@
 
         L_SYMBOL {
             bindings = <&mo 3>;
-            key-positions = <15 14>;
+            key-positions = <15 16>;
         };
 
         // FUNCTION レイヤー (押している間) : 右手ホーム段 [J] + [K]
 
         R_SYMBOL {
             bindings = <&mo 3>;
-            key-positions = <20 21>;
+            key-positions = <20 19>;
         };
 
         // ' : 右手ホーム段 [K] + [L]
@@ -129,7 +129,7 @@
 
         lang1 {
             bindings = <&kp LANG1>;
-            key-positions = <15 16>;
+            key-positions = <15 14>;
         };
     };
 
@@ -181,10 +181,10 @@
 
         default_layer {
             bindings = <
-&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R         &kp T                                          &kp Y            &kp U  &kp I      &kp O         &kp P          &kp MINUS
-&hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                          &kp H            &kp J  &kp K      &kp L         &kp SEMI       &kp SQT
-&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                          &kp N            &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo WLESS  &mo SCROLL  &hm LALT ESC  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &ltk NUMBER RET                    &kp LA(LEFT)  &kp LA(RIGHT)
+&ltk WLESS GRAVE  &kp Q            &kp W      &kp E       &kp R         &kp T                                          &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
+&hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                          &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
+&kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                          &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
+                  &ltk WLESS CAPS  &mo WLESS  &mo SCROLL  &hm LALT ESC  &hm LGUI LANG2  &stl SYMBOL SPACE    &kp BSPC  &ltk NUMBER LANG2                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
