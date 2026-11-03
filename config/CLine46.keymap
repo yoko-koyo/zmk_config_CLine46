@@ -162,7 +162,7 @@
             bindings = <&mo>, <&kp>;
         };
 
-        // BSPC 用 Layer-Tap (Hold: Layer, Tap: BSPC)。判定は ltk に合わせる
+        // BSPC 用 Layer-Tap (Hold: Layer, Tap: BSPC)。判定は ltk に合わせる。現在は未使用 (SYMBOL を戻すとき用)
         // hold-preferred : 押したまま他キーを押した時点で hold (レイヤー) に確定
         // quick-tap      : ltk と違い有効。素早く2度目を押すと通常の BSPC (長押しでリピートして連続削除)
 
@@ -204,7 +204,7 @@
         //  | Shift  |   Z    |   X    |   C    |   V    |   B    |                           |   N    |   M    |   ,    |   .    |   /    | Sft/=  |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
-        //           |WL/Caps | SCROLL |  Alt   |Alt/Esc |Cmd/Eisu| FN/Spc |         | SYM/BS |NUM/Kana|                  | Opt+<- | Opt+-> |
+        //           |WL/Caps | SCROLL |  Alt   |Alt/Esc |Cmd/Eisu| FN/Spc |         |   BS   |NUM/Kana|                  | Opt+<- | Opt+-> |
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
 
         default_layer {
@@ -212,7 +212,7 @@
 &hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                                  &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
 &hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                                  &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
 &kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                                  &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LALT ESC  &hm LGUI LANG2  &slt FUNCTION SPACE    &blt SYMBOL BSPC   &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+                  &ltk WLESS CAPS  &mo SCROLL &kp LALT    &hm LALT ESC  &hm LGUI LANG2  &slt FUNCTION SPACE    &kp BSPC           &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
@@ -237,13 +237,13 @@
             >;
         };
 
-        //2 数字・記号 (Shift なしの記号とカッコ)・矢印キー
+        //2 数字・記号・カッコ・矢印キー
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |        |   1    |   2    |   3    |   4    |   5    |                           |   6    |   7    |   8    |   9    |   0    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   ()   |   {}   |   [    |   ]    |   '    |                           |  Left  |  Down  |   Up   | Right  |        |        |
+        //  |        |   !    |   ?    |   [    |   ]    |   '    |                           |  Left  |  Down  |   Up   | Right  |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   \    |  Pipe  |   {    |   }    |   "    |                           |  Esc   |  Tab   |        |        |        |        |
+        //  |        |   \    |  Pipe  |   ()   |   {}   |   "    |                           |  Esc   |  Tab   |        |        |        |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
         //           |        |        |        |        |        |        |         |        |        |                  |        |        |
@@ -251,23 +251,23 @@
 
         NUMBER {
             bindings = <
-&trans  &kp N1         &kp N2         &kp N3    &kp N4    &kp N5                     &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
-&trans  &macro_parens  &macro_braces  &kp LBKT  &kp RBKT  &kp SQT                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
-&trans  &kp BSLH       &kp PIPE       &kp LBRC  &kp RBRC  &kp DQT                    &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
+&trans  &kp N1    &kp N2     &kp N3         &kp N4         &kp N5                     &kp N6    &kp N7    &kp N8  &kp N9     &kp N0  &trans
+&trans  &kp EXCL  &kp QMARK  &kp LBKT       &kp RBKT       &kp SQT                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans  &trans
+&trans  &kp BSLH  &kp PIPE   &macro_parens  &macro_braces  &kp DQT                    &kp ESC   &kp TAB   &trans  &trans     &trans  &trans
         &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                      &trans     &trans
             >;
         };
 
-        //3 記号 (BSPC [位置42] の長押しで有効)
+        //3 記号 (現在は入り口なし。戻すときは BSPC を &blt SYMBOL BSPC にする)
         //  上段は US 配列の Shift+数字 の記号 (NUMBER レイヤーの 1〜0 と同じ位置)
         //  2〜3段目の左手は NUMBER レイヤーとほぼ同じ (2段目の [ ] の位置だけ ( ) )
         //  ベースレイヤーで記号が出る位置は、その記号の Shift 版 (` → ~ / \ → | / - → _ / ; → : / , . / → < > ? / = → +)
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //  |   ~    |   !    |   @    |   #    |   $    |   %    |                           |   ^    |   &    |   *    |   (    |   )    |   _    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |   |    |   ()   |   {}   |   (    |   )    |   '    |                           |  Left  |  Down  |   Up   | Right  |   :    |        |
+        //  |   |    |   !    |   ?    |   (    |   )    |   '    |                           |  Left  |  Down  |   Up   | Right  |   :    |        |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
-        //  |        |   \    |   |    |   {    |   }    |   "    |                           |  Esc   |  Tab   |   <    |   >    |   ?    |   +    |
+        //  |        |   \    |   |    |   ()   |   {}   |   "    |                           |  Esc   |  Tab   |   <    |   >    |   ?    |   +    |
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
         //           +--------+--------+--------+--------+--------+--------+         +--------+--------+                  +--------+--------+
         //           |        |        |        |        |        |        |         |        |        |                  |        |        |
@@ -275,9 +275,9 @@
 
         SYMBOL {
             bindings = <
-&kp TILDE  &kp EXCL       &kp AT         &kp HASH  &kp DLLR  &kp PRCNT                    &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR   &kp RPAR   &kp UNDER
-&kp PIPE   &macro_parens  &macro_braces  &kp LPAR  &kp RPAR  &kp SQT                      &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT  &kp COLON  &trans
-&trans     &kp BSLH       &kp PIPE       &kp LBRC  &kp RBRC  &kp DQT                      &kp ESC    &kp TAB   &kp LT     &kp GT     &kp QMARK  &kp PLUS
+&kp TILDE  &kp EXCL  &kp AT     &kp HASH       &kp DLLR       &kp PRCNT                    &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR   &kp RPAR   &kp UNDER
+&kp PIPE   &kp EXCL  &kp QMARK  &kp LBRC       &kp RBRC       &kp SQT                      &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT  &kp COLON  &trans
+&trans     &kp BSLH  &kp PIPE   &macro_parens  &macro_braces  &kp DQT                      &kp ESC    &kp TAB   &kp LT     &kp GT     &kp QMARK  &kp PLUS
         &trans     &trans     &trans    &trans    &trans      &trans    &trans  &trans                           &trans     &trans
             >;
         };
