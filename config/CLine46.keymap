@@ -164,7 +164,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "HM";
             #binding-cells = <2>;
-            tapping-term-ms = <190>;
+            tapping-term-ms = <160>;
             flavor = "hold-preferred";
             bindings = <&kp>, <&kp>;
         };
@@ -206,7 +206,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LTK";
             #binding-cells = <2>;
-            tapping-term-ms = <190>;
+            tapping-term-ms = <160>;
             flavor = "hold-preferred";
             quick-tap-ms = <0>;        // 連打からの長押しでタップ側がリピートするのを禁止
             bindings = <&mo>, <&kp>;
