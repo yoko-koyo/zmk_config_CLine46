@@ -19,6 +19,10 @@ properties:
     type: boolean
     description: 縦スクロールの向きを反転する
 
+  no-inertia:
+    type: boolean
+    description: 慣性を付けない (離したらすぐ止まる)。慣性関係の設定は無視される
+
   slow-scale:
     type: int
     default: 150

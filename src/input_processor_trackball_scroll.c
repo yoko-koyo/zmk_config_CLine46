@@ -56,6 +56,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 struct ts_config {
     bool invert[2];
+    bool no_inertia;         /* true なら慣性を付けない */
     int32_t slow_scale;      /* milli-units / count (遅い時) */
     int32_t fast_scale;      /* milli-units / count (速い時) */
     int32_t half_speed;      /* counts/sec。slow と fast の中間になる速度 */
@@ -207,7 +208,8 @@ static void ts_release_handler(struct k_work *work) {
     bool start = false;
 
     K_SPINLOCK(&data->lock) {
-        if (data->count < 3 || data->last_event - data->stroke_start < cfg->min_stroke_ms) {
+        if (cfg->no_inertia || data->count < 3 ||
+            data->last_event - data->stroke_start < cfg->min_stroke_ms) {
             K_SPINLOCK_BREAK;
         }
 
@@ -437,6 +439,7 @@ static int ts_init(const struct device *dev) {
     static struct ts_data ts_data_##n;                                                             \
     static const struct ts_config ts_config_##n = {                                                \
         .invert = {DT_INST_PROP(n, invert_x), DT_INST_PROP(n, invert_y)},                          \
+        .no_inertia = DT_INST_PROP(n, no_inertia),                                                 \
         .slow_scale = DT_INST_PROP(n, slow_scale),                                                 \
         .fast_scale = DT_INST_PROP(n, fast_scale),                                                 \
         .half_speed = DT_INST_PROP(n, half_speed),                                                 \
