@@ -397,11 +397,11 @@ static int ts_handle_event(const struct device *dev, struct input_event *event, 
             data->dom[AXIS_Y] = data->dom[AXIS_Y] * 3 / 4;
         }
 
-        /* 「離した」判定までの待ち時間: 直近の報告間隔の2倍 (min-release-ms 〜 release-ms)。
+        /* 「離した」判定までの待ち時間: 直近の報告間隔の1.5倍 (min-release-ms 〜 release-ms)。
          * 速く動かしている時は報告が途切れずに来るので早く判定でき、
          * 離してから慣性が始まるまでの「止まりかけ」が短くなる */
         data->release_delay =
-            CLAMP((uint32_t)(2 * data->report_dt), cfg->min_release_ms, cfg->release_ms);
+            CLAMP((uint32_t)(3 * data->report_dt / 2), cfg->min_release_ms, cfg->release_ms);
         release_delay = data->release_delay;
     }
 

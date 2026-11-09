@@ -56,7 +56,7 @@ properties:
   min-release-ms:
     type: int
     default: 16
-    description: 速く動かしている時の「離した」判定の最短時間。判定は直近の報告間隔の2倍 (この値〜release-ms)
+    description: 速く動かしている時の「離した」判定の最短時間。判定は直近の報告間隔の1.5倍 (この値〜release-ms)
 
   resume-ms:
     type: int

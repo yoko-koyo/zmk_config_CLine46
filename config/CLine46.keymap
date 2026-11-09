@@ -106,10 +106,10 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // Delete (前方削除) : 左手ホーム段 [D] + [F]
+        // 長押し SCROLL (トラックボールでスクロール) / タップ Delete (前方削除) : 左手ホーム段 [D] + [F]
 
         L_DEL {
-            bindings = <&kp DEL>;
+            bindings = <&ltk SCROLL DEL>;
             key-positions = <15 16>;
         };
 
@@ -179,9 +179,9 @@
             compatible = "zmk,behavior-hold-tap";               
             label = "SLT";
             #binding-cells = <2>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <170>;
             require-prior-idle-ms = <140>;
-            quick-tap-ms = <145>;
+            quick-tap-ms = <140>;
             flavor = "balanced";
             bindings = <&mo>, <&kp>;
         };
