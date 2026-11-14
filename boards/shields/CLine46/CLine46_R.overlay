@@ -27,14 +27,14 @@
 /* スクロール。加速・軸固定・慣性をこれ1つで行う。センサー生値(cpi=390)を受け取る。
    実装: src/input_processor_trackball_scroll.c
    量の単位は milli-units/count (100 = 10カウントで1段)。
-   慣性はゆっくり動かした時以外はほぼ常に付ける (start-velocity 未満の速さでは滑らない)。 */
+   慣性は no-inertia で無効化している。 */
 
 / {
     trackball_scroll: trackball_scroll {
         compatible = "zmk,input-processor-trackball-scroll";
         #input-processor-cells = <0>;
         invert-x;                    // 横スクロールの向きを反転
-        // no-inertia;               // 有効にすると慣性なし (離したらすぐ止まる)
+        no-inertia;                  // 慣性なし (離したらすぐ止まる)。以下の慣性パラメータは無効
 
         slow-scale = <130>;          // ゆっくり転がした時: 約7.7カウントで1段
         fast-scale = <140>;          // 速く転がした時: 約7.1カウントで1段 (ゆるい加速)
