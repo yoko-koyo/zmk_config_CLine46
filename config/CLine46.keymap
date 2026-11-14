@@ -211,6 +211,32 @@
             quick-tap-ms = <0>;        // 連打からの長押しでタップ側がリピートするのを禁止
             bindings = <&mo>, <&kp>;
         };
+
+        // 英数/かな Tap-Dance (1回タップ: 英数 / 2回タップ: かな)。cmd_eisu のタップ側から使う
+        // tapping-term: 2回目のタップを待つ時間。1回タップの英数はこの分だけ遅れて出る
+
+        td_eisu_kana: td_eisu_kana {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_EISU_KANA";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LANG2>, <&kp LANG1>;
+        };
+
+        // Cmd/英数キー用 Hold-Tap (Hold: Cmd, Tap: td_eisu_kana)。使い方: &cmd_eisu LGUI 0
+        // 長押し判定を tap-dance の外に出し、Cmd が tap-dance の待ち時間なしで効くようにする
+        // hold-preferred : hm と同じ。押したまま他キーを押した時点で Cmd に確定
+        // quick-tap      : 1回目のタップ直後の2回目を即タップ扱いにし、2回タップのかなを確実に拾う
+
+        cmd_eisu: cmd_eisu {
+            compatible = "zmk,behavior-hold-tap";
+            label = "CMD_EISU";
+            #binding-cells = <2>;
+            tapping-term-ms = <160>;
+            quick-tap-ms = <200>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&td_eisu_kana>;
+        };
     };
 
     keymap {
@@ -219,6 +245,7 @@
         // 各レイヤーの図: 空欄は &trans (下のレイヤー / ベースのキー)。
         // OS Sft = ワンショット Shift (タップで次の1文字だけ Shift、押し続けると普通の Shift)
         // A/B は「長押し A / タップ B」(例: Cmd/Eisu = 長押し Cmd、タップ 英数)
+        // Cmd/Eisu は2回タップでかな (cmd_eisu)
 
         //0 基本
         //  +--------+--------+--------+--------+--------+--------+                           +--------+--------+--------+--------+--------+--------+
@@ -237,7 +264,7 @@
 &hm LALT GRAVE    &kp Q            &kp W      &kp E       &kp R         &kp T                                                  &kp Y              &kp U  &kp I      &kp O         &kp P          &kp MINUS
 &hm LCTRL BSLH    &kp A            &kp S      &kp D       &kp F         &kp G                                                  &kp H              &kp J  &kp K      &kp L         &kp SEMI       &kp RET
 &kp LSHIFT        &kp Z            &kp X      &kp C       &kp V         &kp B                                                  &kp N              &kp M  &kp COMMA  &kp DOT       &kp SLASH      &hm RSHIFT EQUAL
-                  &ltk WLESS CAPS  &mo SCROLL &sk LSHIFT  &hm LALT ESC  &hm LGUI LANG2  &slt FUNCTION SPACE    &kp BSPC        &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
+                  &ltk WLESS CAPS  &mo SCROLL &sk LSHIFT  &hm LALT ESC  &cmd_eisu LGUI 0 &slt FUNCTION SPACE   &kp BSPC        &ltk NUMBER LANG1                    &kp LA(LEFT)  &kp LA(RIGHT)
             >;
         };
 
