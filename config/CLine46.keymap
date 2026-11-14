@@ -106,10 +106,10 @@
             layers = <ALL_BUT_MOUSE>;
         };
 
-        // 長押し SCROLL (トラックボールでスクロール) / タップ Delete (前方削除) : 左手ホーム段 [D] + [F]
+        // 押している間 SCROLL (トラックボールでスクロール) : 左手ホーム段 [D] + [F]
 
-        L_DEL {
-            bindings = <&ltk SCROLL DEL>;
+        L_SCROLL {
+            bindings = <&mo SCROLL>;
             key-positions = <15 16>;
         };
 
